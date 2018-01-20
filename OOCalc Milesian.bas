@@ -66,7 +66,7 @@ PosDiv = 0
 		A = A + D
 		PosDiv = PosDiv - 1
 	Wend
-	While (A > D)
+	While (A >= D)
 		A = A - D
 		PosDiv = PosDiv + 1
 	Wend
