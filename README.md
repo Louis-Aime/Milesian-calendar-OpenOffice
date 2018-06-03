@@ -24,20 +24,19 @@ You can see the functions and even edit them.
 ## Using the functions
 * Choose a cell and hit "insert function" near the input bar.
 * You may enter the name of any of the functions. Be sure to put the right parameters in your formula.
-* NB: Functions are sensitive to "1904 Calendar" (by default on MacOS in old versions of Excel)
 
 ## MilesianCalendar
-Compute a system date with Milesian date elements, or retrieve Milesian date elements from a system date.
+Compute a date time stamp with Milesian date elements, or retrieve Milesian date elements from a time stamp.
 
 ### General considerations
 * All "date" results are given as a long integer. 
-Choose the format of the cell as a "date" format with a long year to see the result as an ordinary date.
+Choose the format of the cell as a "date" format with a long year to see the result as an ordinary (i.e. julio-gregorian) date.
 * Some control of Basic are presently not very effective, so we cannot check for non integer values of parameters.
 * OpenOffice Calc displays BC years the same way as AD, in an ambiguous way. 
-This is the reason why a chose to give date results as a long integer, representing the series number.
-* Note that OpenOffice swithes from Julian to Gregorian calendar at the earliest, i.e. on 25 10m 1582 (15 Oct. 1582).
+This is the reason why we chose to give date results as a long integer, representing the series number.
+* Note that OpenOffice switches from Julian to Gregorian calendar at the earliest, i.e. on 15 Oct 1582.
 * You cannot raise errors from Basic. A date computed with wrong parameters shall appear as 20/12/-3741.
-* There is no range control on dates. Calc displays properly from 1 Jan. 32767 B.C. up to 31 Dec. 32767 A.D.
+* There is no range control on dates. Calc displays properly from 1 Jan 32767 B.C. up to 31 Dec 32767 A.D.
 
 ### Open Office similar functions of this module 
 They work like the standard date-time functions of OpenOffice (and of Excel or other sheets BTW)
@@ -59,26 +58,27 @@ Boolean, whether the year is long (366 days) or not.
 * Year, the year in question. 
 
 A long Milesian year is just before a leap year, e.g. 2015 is a long year because 2016 is a leap year. 
-With the Milesian calendar, a proposed rule is this:
-years -4001, -801, 2399, 5599 etc. are *not* long. Elsewise the Gregorian rules are applied, 
+The Milesian calendar applies the Gregorian rules all the time, i.e. even before 1582, 
+and applies a proposed supplementary rule: 
+years -4001, -801, 2399, 5599 etc. every 3200 years, are *not* long. 
 e.g. 1899 is *not* long whereas 1999 is.
 
 ### MILESIAN_YEAR_BASE (Year) 
 Date of the day before the 1 1m of year Y, i.e. the "doomsday".
 
 ### JULIAN_EPOCH_COUNT (Date)
-Decimal Julian Day from Excel time stamp, deemed UTC date. 
+Decimal Julian Day from time stamp, deemed UTC date. 
 * Date: the date to convert.
 
 ### JULIAN_EPOCH_DATE (Count)
-Excel time stamp (Date type) representing the UTC Date from a fractional Julian Day.
+Time stamp (Date type) representing the UTC Date from a fractional Julian Day.
 * Count: fractional Julian Day to convert.
 
 ### DAYOFWEEK_Ext (Date, Option)
 The day of the week for the Date, with another default option.
 * Date: the date whose day of week is computed
 * Option: a number; default or 0 means 0 = Sunday, Monday = 1, etc., Saturday = 6; 
-1 is Excel's DAYOFWEEK's default option meaning 1 = Sunday, 2 = Monday, etc., Saturday = 7;
+1 is DAYOFWEEK's default option meaning 1 = Sunday, 2 = Monday, etc., Saturday = 7;
 2, 3, are the same as OO Calc DAYOFWEEK's options.
 
 ## MilesianMoonPhase
@@ -94,14 +94,13 @@ Similar, but computes next moon phase.
 This module has only a string parser, that converts a (numeric) Gregorian or Milesian date or date-time expression 
 into an OO time stamp. 
 ### DATE_PARSE (String)
-Date (Excel time stamp) corresponding to a date expression
+Date (time stamp) corresponding to a date expression
 * String: holds the date expression. 
-This parser recognises a date expression, Gregorian or Milesian. 
-It is a Milesian date expression if either the month number ends with "m" (and without leading 0), 
+This parser recognises a Gregorian or Milesian date expression. 
+The string is a Milesian date expression if either the month number ends with "m" (and without leading 0), 
 or if the complete string begins with "M", in which case elements must be in the order year, month, date.
-Date must hold three digit, and may be negative. BC years are counted in relative i.e. year 2 B.C. is year -1. 
-Separators between date elements must be the same (except comma with spaces). 
-It is possible to specify only 2 date elements, including the month. 
-If specified, the year is 3-digits. Elsewhise, it is considered "current year".
-If day of month is not specified, it is set to 1.
-This function applied to *string* date expressions from 1/1/1900 to 28/02/1900 yields correct dates.
+Date must hold three digit, and may be negative. BC years are counted in relative figures i.e. year 2 B.C. is year -1. 
+Separators between date elements must be the same (comma is accepted with spaces). 
+It is possible to specify only 2 date elements, but this must include the month. 
+If specified, the year is 3-digit, otherwise it is considered "current year". 
+If day of month is not specified, it is set to 1. 
