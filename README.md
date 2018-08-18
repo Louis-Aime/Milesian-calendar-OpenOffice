@@ -6,7 +6,7 @@ Copyright (c) Miletus, Louis-Aimé de Fouquières, 2018
 MIT licence applies
 
 ## Installation
-1. Put all contents (.xba and .xlb files) on a dedicated directory (named "CalendarFunctions") of your file system.
+1. Put all contents of subdirectory (.xba and .xlb files) on a dedicated directory (named "CalendarFunctions") of your file system.
 1. Open or create an OpenOffice Calc file.
 1. Menu: Tools/Macro/Manage/Basic.
 1. In small window: "Manage" button.
@@ -91,16 +91,16 @@ Date of last new moon, or of other specified moon phase. Result is in Terrestria
 Similar, but computes next moon phase.
 
 ## DateParse
-This module has only a string parser, that converts a (numeric) Gregorian or Milesian date or date-time expression 
+This module has only a string parser, that converts a (numeric) Julio-Gregorian or Milesian date or date-time expression 
 into an OO time stamp. 
 ### DATE_PARSE (String)
 Date (time stamp) corresponding to a date expression
 * String: holds the date expression. 
-This parser recognises a Gregorian or Milesian date expression. 
+This parser recognises a Julio-Gregorian or Milesian date expression. 
 The string is a Milesian date expression if either the month number ends with "m" (and without leading 0), 
 or if the complete string begins with "M", in which case elements must be in the order year, month, date.
-Date must hold three digit, and may be negative. BC years are counted in relative figures i.e. year 2 B.C. is year -1. 
+Year may be negative. If positive, it shall hold three digits.
+Years before Christian (Common) era are counted in relative figures i.e. year 2 B.C. is year -1. 
 Separators between date elements must be the same (comma is accepted with spaces). 
 It is possible to specify only 2 date elements, but this must include the month. 
-If specified, the year is 3-digit, otherwise it is considered "current year". 
 If day of month is not specified, it is set to 1. 
