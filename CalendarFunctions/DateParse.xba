@@ -5,23 +5,22 @@
 Attribute VB_Name = &quot;DateParse&quot;
 &apos;DateParse.
 &apos;Copyright Miletus SARL 2018. www.calendriermilesien.org
-&apos;For use as an MS Excel VBA module.
-&apos;Developped under Excel 2016
-&apos;Tested under MS Excel 2007 (Windows) and 2016 (Windows and MacOS)
+&apos;For use as an Open Office BASIC module.
+&apos;After a VBA module
+&apos;Tested under Libre Office 5.0 and 6.0 under MS Windows 10
 &apos;No warranty of conformance to business objectives
 &apos;Neither resale, neither transmission, neither compilation nor integration in other modules
 &apos;are permitted without authorisation
-&apos;DATE_PARSE, applied to any Date-Time expression as a string, returns the corresponding Excel Date series number.
+&apos;DATE_PARSE, applied to any Date-Time expression as a string, returns the corresponding Date series number.
 &apos;This module uses MilesianCalendar
-&apos;Do not apply to an Excel formatted date between 1 Jan and 29 Feb 1900. Hint: force input to Text format.
-&apos;Version of this module: M2018-08-28
+&apos;Version of this module: M2018-08-30
 
 Const InvArgMsg = &quot;Err :502&quot;	&apos;Error message displayed in place of function result, for non-typed functions (already defined in Milesian)
 
 Function DATE_PARSE(TheCell As String) &apos;A String is converted into a Numeric that corresponds to a Date
 Attribute DATE_PARSE.VB_Description = &quot;Extract date and time value from string. Standard or Milesian expression. Earliest is 1/1/-9999. Negative years possible.&quot;
 &apos;TheCell holds a valid string for a date, either in milesian, either in a specific calendar,
-&apos;or in the standard calendar (In OpenOffice: Julio-gregorian, i.e. Julian until 4 Oct. 1582, then Gregorian).
+&apos;or in the default calendar. In OpenOffice, the Default calendar is Julian until 4 Oct. 1582, then Gregorian.
 &apos;TheCell is supposed a numeric date string. It shall not work with months expressed by their names.
 &apos;Summary:
 &apos;   1. Prepare, convert all in uppercase, trim
@@ -31,7 +30,7 @@ Attribute DATE_PARSE.VB_Description = &quot;Extract date and time value from str
 &apos;   5. Find Month element after its pattern (&quot;M&quot; month marker)
 &apos;   6. Find Year element, of provide present year
 &apos;   7. Find Day element of provide &quot;1&quot; by default, return
-&apos;   Note: authorised delimiters are &quot;./-&quot;. Comma is dropped. m of Milesian month is recognised. Other lead to error.
+&apos;   Note: authorised delimiters are &quot;./-&quot;. Comma is dropped. &quot;m&quot; of Milesian month is recognised. Other lead to error.
 &apos;   If as first character: canvas is yyy/mm/dd or similar, even M-yyy-mm-dd is possible.
 &apos;   If not as first, find and extract &quot;m&quot;, compute d, m and year elements, call MILESIAN_DATE.
 On Error Goto ErrorHandler

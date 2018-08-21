@@ -5,8 +5,9 @@
 Attribute VB_Name = &quot;MeanMoonPhase&quot;
 &apos;MeanMoonPhase: Find a moon phase near a date.
 &apos;Copyright Miletus SARL 2017-2018. www.calendriermilesien.org
-&apos;For use as an MS Excel VBA module.
-&apos;Tested under MS Excel 2007 (Windows) and 2016 (Windows and MacOS).
+&apos;Extended after the same module in VBA
+&apos; -&gt; MacOS epoch not taken into account (no way to reach the parameter)
+&apos;Tested under LibreOffice Calc V5.0 and 6.0
 &apos;No warranty.
 &apos;If transmitted, even with changes, present header shall be maintained in full.
 &apos;This package uses no other element.
@@ -18,7 +19,7 @@ Attribute VB_Name = &quot;MeanMoonPhase&quot;
 &apos;Parameters
 &apos;   FromDate: a date and time UTC expressed in Excel
 &apos;   MoonPhase: 0 or omitted: new moon; 1: first quarter; 2: full moon; 3: last quarter; &lt;0 or &gt;3: error.
-&apos;Version V2.0 M2018-02-10
+&apos;Version M2018-08-30
 
 Const MeanSynodicMoon As Double = 29.53058883 &apos;Mean duration of a synodic month in decimal days = 29d 12h 44mn 2s 7/8s
 Const MeanNewMoon2000 As Double = 36531.59773 &apos;G2000-01-06T14-20-44 TT, conventional date of a mean new moon
