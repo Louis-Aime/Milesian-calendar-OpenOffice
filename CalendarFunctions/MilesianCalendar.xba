@@ -2,6 +2,7 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="MilesianCalendar" script:language="StarBasic">REM  *****  BASIC  *****
 
+Attribute VB_Name = &quot;MilesianCalendar&quot;
 &apos;Milesian Calendar: Enter and display dates in Open Office Calc following Milesian calendar conventions
 &apos;Copyright Miletus SARL 2018. www.calendriermilesien.org
 &apos;For use as a Basic module.
@@ -17,10 +18,10 @@
 &apos;
 Const MStoPresentEra As Long = 986163 &apos;Offset between 1/1m/-800 epoch and Microsoft origin (1899-12-31T00 is 1)
 Const MStoJulianMinus05 As Long = 2415018 &apos;Offset between julian day epoch and Microsoft origin, minus 0.5
-Const HighYear = 10000
-Const LowYear = -10000
-Const InvArgMsg = &quot;Err :502&quot;	&apos;Error message displayed in place of function result, for non-typed functions
-Const InvalidNumber = 11968268  &apos;A high number to be set for wrong values of entry parameters, for typed functions
+Const HighYear = 32767 &apos;Highest year handled
+Const LowYear = -32767	&apos;Lowest year handled
+Const InvArgMsg = &quot;Milesian: invalid argument &quot;	&apos;Error message displayed in place of function result, for non-typed functions
+Const InvalidNumber = -12662107  &apos;The lowest possible date to be set for wrong values of date entry parameters, for typed functions
 
 
 &apos;#Part 1: internal procedures
@@ -103,6 +104,7 @@ On Error Goto ErrorHandler
   MILESIAN_IS_LONG_YEAR = PosMod (Year,4) = 0 And (PosMod (Year,100) &lt;&gt; 0 Or (PosMod(Year, 400) = 0 And PosMod(Year+800, 3200) &lt;&gt; 0))
   Exit Function
 ErrorHandler:
+  &apos;MILESIAN_IS_LONG_YEAR = InvArgMsg
   MILESIAN_IS_LONG_YEAR = False
 End Function
 
@@ -234,12 +236,13 @@ If IsMissing(Wtime) Then Wtime = 1
 &apos;Dim NumDate as Date
 &apos;NumDate = TheDate &apos;Force conversion or raise error
 Milesian_DateElement TheDate, Y, M, Q, T  &apos;Compute the figures of the milesian date
-&apos;Fill year element with zeroes
-YS = Y
-If Y &gt;= 0 And Y &lt; 10 Then YS = &quot;00&quot; &amp; Y
-If Y &gt;= 10 And Y &lt; 100 Then YS = &quot;0&quot; &amp; Y
-If Y &gt; -10 And Y &lt; 0 Then YS = &quot;-00&quot; &amp; (-Y)
-If Y &gt; -100 And Y &lt;= -10 Then YS = &quot;-0&quot; &amp; (-Y)
+YS = Format (Y, &quot;000&quot;)
+	&apos;Fill year element with zeroes - if former function is not able.
+	&apos;YS = Y
+	&apos;If Y &gt;= 0 And Y &lt; 10 Then YS = &quot;00&quot; &amp; Y
+	&apos;If Y &gt;= 10 And Y &lt; 100 Then YS = &quot;0&quot; &amp; Y
+	&apos;If Y &gt; -10 And Y &lt; 0 Then YS = &quot;-00&quot; &amp; (-Y)
+	&apos;If Y &gt; -100 And Y &lt;= -10 Then YS = &quot;-0&quot; &amp; (-Y)
 MILESIAN_DISPLAY = Q &amp; &quot; &quot; &amp; M &amp; &quot;m &quot; &amp; YS
 If Wtime = 1 Then MILESIAN_DISPLAY = MILESIAN_DISPLAY &amp; &quot; &quot; &amp; T
 Exit Function
@@ -267,7 +270,7 @@ If (Q = 31) And (((M Mod 2) = 1) Or ((M = 12) And Not MILESIAN_IS_LONG_YEAR(Y)))
 MILESIAN_MONTH_SHIFT = MILESIAN_DATE(Y, M, Q)
 Exit function
 ErrorHandler:
-MILESIAN_MONTH_SHIFT = InvalidNumber
+MILESIAN_MONTH_SHIFT = InvArgMsg
 End Function
 
 Function MILESIAN_MONTH_END(TheDate, MonthShift As Long) As Long &apos;End of month several (milesian) months later of earlier
@@ -291,7 +294,7 @@ End If
 MILESIAN_MONTH_END = MILESIAN_DATE(Y, M, Q)
 Exit function
 ErrorHandler:
-MILESIAN_MONTH_END = InvalidNumber
+MILESIAN_MONTH_END = InvArgMsg
 End Function
 
 &apos;#Part 6: Julian Day conversion functions
