@@ -20,12 +20,11 @@ Attribute VB_Name = &quot;MeanMoonPhase&quot;
 &apos;   FromDate: a date and time UTC expressed in Excel
 &apos;   MoonPhase: 0 or omitted: new moon; 1: first quarter; 2: full moon; 3: last quarter; &lt;0 or &gt;3: error.
 &apos;Version M2018-09-01
+&apos;Version M2018-12-25 : error handling 
 
 Const MeanSynodicMoon As Double = 29.53058883 &apos;Mean duration of a synodic month in decimal days = 29d 12h 44mn 2s 7/8s
 Const MeanNewMoon2000 As Double = 36531.59773 &apos;G2000-01-06T14-20-44 TT, conventional date of a mean new moon
-Const InvArgMsg = &quot;Milesian: invalid argument &quot;	&apos;Error message displayed in place of function result, for non-typed functions
-Const InvalidNumber = -12662107  &apos;The lowest possible date to be set for wrong values of date entry parameters, for typed functions
-
+Const InvArgMsg = &quot;Err (Milesian) &quot;	&apos;Error message displayed in place of function result, for non-typed functions
 
 Function MOON_PHASE_LAST(FromDate, Optional MoonPhase As Integer)
 Attribute MOON_PHASE_LAST.VB_Description = &quot;Date of last mean moon phase. Phase 0 or omitted: New Moon, 1: First Q, 2: Full Moon, 3: Last Q.&quot;
