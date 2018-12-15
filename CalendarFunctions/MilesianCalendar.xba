@@ -15,14 +15,17 @@ Attribute VB_Name = &quot;MilesianCalendar&quot;
 &apos;Functions are aimed at extending Date &amp; Time functions, and use similar parameters syntax in English
 &apos;Version M2018-08-30
 &apos;M2018-08-30: modified MILESIAN_DISPLAY, year always with at least 3-digits
-&apos;
-Const MStoPresentEra As Long = 986163 &apos;Offset between 1/1m/-800 epoch and Microsoft origin (1899-12-31T00 is 1)
+&apos;M2018-12-25: 
+&apos; changed type of Y to Long in Milesian_Date_Element
+&apos; modified error handling and error message, mostly with untyped function
+&apos; defined highest a lowest dates handled with Calc, for MILESIAN_DATE; milesian figures and display without limitation
+Const MStoPresentEra As Long = 986163 &apos;Offset between 1/1m/-800 epoch and Microsoft origin (1899-12-30T00 is 0)
 Const MStoJulianMinus05 As Long = 2415018 &apos;Offset between julian day epoch and Microsoft origin, minus 0.5
-Const HighYear = 32767 &apos;Highest year handled
-Const LowYear = -32767	&apos;Lowest year handled
-Const InvArgMsg = &quot;Milesian: invalid argument &quot;	&apos;Error message displayed in place of function result, for non-typed functions
-Const InvalidNumber = -12662107  &apos;The lowest possible date to be set for wrong values of date entry parameters, for typed functions
-
+Const HighDate = 11274306 &apos;Highest date that is properly handled in Calc, high limit for MILESIAN_DATE
+Const LowDate = -12661859 &apos;Lowest date that is properly handled in Calc, low limit for MILESIAN_DATE
+Const HighYear = 32768 &apos;Highest Milesian year handled
+Const LowYear = -32768	&apos;Lowest Milesian year handled
+Const InvArgMsg = &quot;Err (Milesian) &quot;	&apos;Error message displayed in place of function result, for non-typed functions
 
 &apos;#Part 1: internal procedures
 
@@ -40,9 +43,7 @@ If Divisor &gt; 0 Then
     Phase = Phase - Divisor
     Cycle = Cycle + 1
     Wend
-Else
-	Cycle = InvalidNumber
-	Phase = InvalidNumber
+&apos;Else part deleted. Should be error raising.
 End If
 End Sub
 
@@ -57,9 +58,7 @@ If Divisor &gt; 0 And Dividend &gt;= 0 And Dividend &lt;= ceiling * Divisor + 1 
  Phase = Phase - Divisor
  Cycle = Cycle + 1
  Wend
-Else
-	Cycle = InvalidNumber
-	Phase = InvalidNumber
+&apos; Else part deleted. Should be error raising.
 End If
 End Sub
 
@@ -110,10 +109,12 @@ End Function
 
 &apos;#Part 3: Compute date from milesian parameters
 
-Function MILESIAN_DATE(Year, Month, DayInMonth) As Long &apos;Date set as a long integer, without time element
+Function MILESIAN_DATE(Year, Month, DayInMonth) &apos;Date set as a long integer, without time element
 &apos;Date number from a Milesian date given as year (positive or negative), month, daynumber in month
-&apos;Result is forced to a long number, elsewhise an ambiguous string is created.
+&apos;Result is forced to a Date objet
+&apos;Date must be in the domain, else an ambiguous string is created.
   On Error Goto ErrorHandler
+  Dim Result As Date &apos;Intermediate result forced as Date
   Dim A As Integer &apos;Intermediate computations as non-long integer
   Dim B As Long   &apos;Bimester number, for intermediate computations
   Dim M1 As Long  &apos;Month rank
@@ -129,36 +130,39 @@ If Year &lt;&gt; Int(Year) Or Month &lt;&gt; Int(Month) Or DayInMonth &lt;&gt; I
 	  D = Year            &apos;Force long-integer conversion
 	  D = D * 365      &apos;Begin computation of days in long-integer;
 	  D = D - MStoPresentEra - 1 + B * 61 + M1 * 30 + A + DayInMonth &apos;Computations in long-integer first
-	  MILESIAN_DATE = D
+	  Result = D
 	Else	&apos; Case where date elements do not build a correct milesian date
-	  MILESIAN_DATE = InvalidNumber+1	
+	  Goto ErrorHandler	
 	End If
   Else		&apos; Case where the date elements are outside basic values
-	MILESIAN_DATE = InvalidNumber+2
+	Goto ErrorHandler
   End If
+If Result &gt; HighDate or Result &lt; LowDate Then Goto ErrorHandler
+MILESIAN_DATE = Result
 Exit Function
 ErrorHandler:
-  MILESIAN_DATE = InvalidNumber+3
+  MILESIAN_DATE = InvArgMsg
 End Function
 
-Function MILESIAN_YEAR_BASE(ByVal Year) As Long &apos;The Year base or Doomsday of a year i.e. the date just before the 1 1m of the year
+Function MILESIAN_YEAR_BASE(ByVal Year As Long) &apos;The Year base or Doomsday of a year i.e. the date just before the 1 1m of the year
 On Error Goto ErrorHandler
 If Year &lt;&gt; Int(Year) Or Year &lt; LowYear Or Year &gt; HighYear Then Goto ErrorHandler
-Dim A As Integer, D As Long   &apos;Force long integer
+Dim A As Integer, D As Long, Result As Date
 Year = Year + 800    &apos;Set Epoch to the year -800
-D = Year            &apos;Force long-interger conversion
+D = Year            &apos;Force long-integer conversion
 D = D * 365      &apos;Begin computation of days in long-integer;
 A = PosDiv (Year, 4) - PosDiv(Year, 100) + PosDiv(Year, 400) - PosDiv(Year, 3200)
 D = D - MStoPresentEra + A - 1           &apos;Computations in long-integer first
-MILESIAN_YEAR_BASE = D
+Result = D
+ MILESIAN_YEAR_BASE = Result
 Exit Function
 ErrorHandler: 
-MILESIAN_YEAR_BASE = InvalidNumber
+ MILESIAN_YEAR_BASE = InvArgMsg
 End Function
 
 &apos;#Part 4: Extract Milesian elements from Date number
 
-Sub Milesian_DateElement(DNum As Date, Y As Integer, M As Integer, Q As Integer, T As Variant)
+Sub Milesian_DateElement(DNum As Date, Y As Long, M As Integer, Q As Integer, T As Variant)
 &apos; From DNum, a Date object, compute the milesian date Q / M / Y (day in month, month, year)
 &apos; Y is year in common era, relative value (may be 0 or negative)
 &apos; M is milesian month number, 1 to 12
@@ -188,7 +192,7 @@ End Sub
 
 Function MILESIAN_YEAR(TheDate)  &apos;The milesian year (common era) for a Date argument (a series number or a string)
 On Error Goto ErrorHandler
-Dim Y As Integer, M As Integer, Q As Integer, T As Variant
+Dim Y As Long, M As Integer, Q As Integer, T As Variant
 &apos;Dim NumDate as Date
 &apos;NumDate = TheDate &apos;Force conversion or raise error
 Milesian_DateElement TheDate, Y, M, Q, T   &apos;Compute the figures of the milesian date
@@ -200,7 +204,8 @@ End Function
 
 Function MILESIAN_MONTH(TheDate)   &apos;The milesian month number (1-12) for a Date argument
 On Error Goto ErrorHandler
-Dim Y As Integer, M As Integer, Q As Integer, T As Variant
+If TheDate = InvArgMsg Then Goto ErrorHandler &apos;If TheDate was obtained from an erroneous computation, issue error
+Dim Y As Long, M As Integer, Q As Integer, T As Variant
 Milesian_DateElement TheDate, Y, M, Q, T   &apos;Compute the figures of the milesian date
 MILESIAN_MONTH = M
 Exit Function
@@ -210,7 +215,8 @@ End Function
 
 Function MILESIAN_DAY(TheDate)  &apos;The day number in the milesian month for a Date argument
 On Error Goto ErrorHandler
-Dim Y As Integer, M As Integer, Q As Integer, T As Variant
+If TheDate = InvArgMsg Then Goto ErrorHandler &apos;If TheDate was obtained from an erroneous computation, issue error
+Dim Y As Long, M As Integer, Q As Integer, T As Variant
 Milesian_DateElement TheDate, Y, M, Q, T   &apos;Compute the figures of the milesian date
 MILESIAN_DAY = Q
 Exit Function
@@ -220,7 +226,8 @@ End Function
 
 Function MILESIAN_TIME(TheDate)
 On Error Goto ErrorHandler
-Dim Y As Integer, M As Integer, Q As Integer, T As Variant
+If TheDate = InvArgMsg Then Goto ErrorHandler &apos;If TheDate was obtained from an erroneous computation, issue error
+Dim Y As Long, M As Integer, Q As Integer, T As Variant
 Milesian_DateElement TheDate, Y, M, Q, T   &apos;Compute the figures of the milesian date
 MILESIAN_TIME = T
 Exit Function
@@ -231,7 +238,8 @@ End Function
 Function MILESIAN_DISPLAY(TheDate, Optional Wtime) As String &apos;Default =False does not work
 &apos;Milesian date as a string, for a Date argument. Year is always three digits.
 On Error Goto ErrorHandler
-Dim Y As Integer, M As Integer, Q As Integer, T As Variant, YS As String
+If TheDate = InvArgMsg Then Goto ErrorHandler &apos;If TheDate was obtained from an erroneous computation, issue error
+Dim Y As Long, M As Integer, Q As Integer, T As Variant, YS As String
 If IsMissing(Wtime) Then Wtime = 1
 &apos;Dim NumDate as Date
 &apos;NumDate = TheDate &apos;Force conversion or raise error
@@ -252,15 +260,14 @@ End Function
 
 &apos;#Part 5: Computations on milesian months
 
-Function MILESIAN_MONTH_SHIFT(TheDate, MonthShift As Long) As Long &apos;Same date several (milesian) months later of earlier
+Function MILESIAN_MONTH_SHIFT(TheDate, MonthShift As Long) &apos;Same date several (milesian) months later of earlier
 On Error Goto ErrorHandler &apos;Error comes from wrong parameter
-Dim Y As Integer, M As Integer, Q As Integer, T As Variant, NumDate as Date
+Dim Y As Long, M As Integer, Q As Integer, T As Variant, NumDate as Date
 Dim M1 As Long, Cycle As Long, Phase As Long
 NumDate = TheDate &apos;Force conversion or raise error
 Milesian_DateElement NumDate, Y, M, Q, D   &apos;Compute the figures of the milesian date
 &apos;Compute month rank from 1m of year 0
-M1 = Y                     &apos; Force computation of month in Long
-M1 = (M1 * 12) + MonthShift + M - 1 &apos;In this order, Long shall be before simple Integer
+M1 = (Y * 12) + MonthShift + M - 1 &apos;In this order, Y is Long and shall be before simple Integer
 &apos;Compute year and month rank
 Milesian_IntegDiv M1, 12, Cycle, Phase
 Y = Cycle
@@ -273,15 +280,14 @@ ErrorHandler:
 MILESIAN_MONTH_SHIFT = InvArgMsg
 End Function
 
-Function MILESIAN_MONTH_END(TheDate, MonthShift As Long) As Long &apos;End of month several (milesian) months later of earlier
+Function MILESIAN_MONTH_END(TheDate, MonthShift As Long) &apos;End of month several (milesian) months later of earlier
 On Error Goto ErrorHandler &apos;Error comes from wrong parameter
-Dim Y As Integer, M As Integer, Q As Integer, T As Variant, NumDate as Date
+Dim Y As Long, M As Integer, Q As Integer, T As Variant, NumDate as Date
 Dim M1 As Long, Cycle As Long, Phase As Long
 NumDate = TheDate &apos;Force conversion or raise error
 Milesian_DateElement NumDate, Y, M, Q, D   &apos;Compute the figures of the milesian date
 &apos;Compute month rank from 1m of year 0
-M1 = Y                     &apos; Force computation of month in Long
-M1 = (M1 * 12) + MonthShift + M - 1 &apos;In this order, Long shall be before simple Integer
+M1 = (Y * 12) + MonthShift + M - 1 &apos;In this order, Y is Long and shall be before simple Integer
 &apos;Compute year and month rank
 Milesian_IntegDiv M1, 12, Cycle, Phase
 Y = Cycle
@@ -329,7 +335,7 @@ Function DAYOFWEEK_Ext(TheDate As Date, Optional DispType As Integer) As Integer
     If IsMissing(DispType) Then DispType = 0    &apos;This option value is not used with standard DOW routines
     Phase = 6   &apos;The most common case: cycle starts with Sunday
     Select Case DispType
-        Case 0          &apos;The Milesian, John Conway, the most simple to memorize
+        Case 0          &apos;The Milesian, John Conway, the simpliest to memorize
             Start = 0
         Case 1          &apos;The Spreadsheets&apos; standard
             Start = 1
@@ -351,5 +357,4 @@ Function DAYOFWEEK_Ext(TheDate As Date, Optional DispType As Integer) As Integer
     DAYOFWEEK_Ext = PosMod(IntDate + Phase, 7) + Start
     
 End Function
-
 </script:module>
