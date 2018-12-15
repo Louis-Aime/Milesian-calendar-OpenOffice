@@ -1,0 +1,556 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=windows-1252"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Windows)"/>
+	<meta name="author" content="Louis-Aim&eacute; de Fouqui&egrave;res"/>
+	<meta name="created" content="2018-01-29T23:12:43.662000000"/>
+	<meta name="changed" content="2018-12-15T23:51:51.373000000"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+		h1 { margin-bottom: 0.21cm }
+		h1.western { font-family: "Liberation Serif", serif }
+		h1.cjk { font-family: "SimSun"; font-size: 24pt }
+		h1.ctl { font-family: "Lucida Sans"; font-size: 24pt }
+		h2.cjk { font-family: "SimSun" }
+		h2.ctl { font-family: "Lucida Sans" }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Microsoft YaHei"; font-size: 14pt }
+		h3.ctl { font-family: "Lucida Sans"; font-size: 14pt }
+	</style>
+</head>
+<body lang="fr-FR" dir="ltr">
+<p align="center" style="margin-bottom: 0cm; line-height: 100%; page-break-after: avoid">
+<font face="Liberation Sans, sans-serif"><font size="6" style="font-size: 28pt"><b>Composants
+OpenOffice Milesian et OpenOffice Milesian Premium</b></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">&nbsp;</p>
+<p>Version M2018-12-25 &ndash; calendriermilesien.org</p>
+<p>Fonctions de calculs calendaires en langage Basic pour LibreOffice
+Calc et &eacute;quivalents Open Office. 
+</p>
+<p>&nbsp;</p>
+<p>Les programmes et leurs commentaires sont r&eacute;dig&eacute;s en
+anglais.</p>
+<p>Auteur&nbsp;: Louis-Aim&eacute; de Fouqui&egrave;res, Miletus SARL
+2017-2018 (www.calendriermilesien.org).</p>
+<p>Test&eacute; sur LibreOffice 6.0.7.3 fran&ccedil;ais sous Windows
+10.</p>
+<h1 class="western">Licence</h1>
+<p>Pour la version de base&nbsp;:</p>
+<p style="text-indent: 1.25cm">Libre utilisation et transmission sans
+co&ucirc;t, sous r&eacute;serve de citation de l&rsquo;auteur.</p>
+<p>Pour la version Premium&nbsp;:</p>
+<p style="text-indent: 1.25cm">Transformations et adaptations
+soumises &agrave; autorisation expresse de l'auteur.</p>
+<p style="text-indent: 1.25cm">Usage en &eacute;quipe (10 personnes)
+autoris&eacute;. Au-dessus&nbsp;: consulter
+www.calendriermilesien.org.</p>
+<p style="text-indent: 1.25cm">Ni diffusion ni revente.</p>
+<p>Aucune garantie de conformit&eacute; &agrave; des objectifs
+commerciaux ou autres.</p>
+<p>&nbsp;</p>
+<h1 class="western">Mise en service</h1>
+<h2 class="western">Avertissements liminaires</h2>
+<h3 class="western">Recul fonctionnel de la gestion des biblioth&egrave;ques
+de macros 
+</h3>
+<p>La gestion des <i>biblioth&egrave;ques de </i><i>macros</i> et des
+<i>extensions</i> souffre de reculs fonctionnels observ&eacute;s
+apparemment depuis la version 6, certains depuis la version 6.0.6.2
+sous Windows 10 (observations du 8m 2018), et confirm&eacute;s sur la
+version 6.0.7.3 (24 12m 2018). Il semblent que les seuls modules
+utilisables d&rsquo;une biblioth&egrave;que de macros ou de fonctions
+sont ceux ins&eacute;r&eacute;s dans la biblioth&egrave;que <i>Standard</i><span style="font-style: normal">
+associ&eacute;e &agrave; un document ou &agrave; l&rsquo;instance
+Libre Office. Les modules des autres biblioth&egrave;ques paraissent
+inconnus ou inaccessibles. </span>
+</p>
+<p><span style="font-style: normal">C</span>eci nous conduit &agrave;
+ne proposer ni cr&eacute;ation d&rsquo;extensions, ni sauvegarde de
+biblioth&egrave;que de fonctions. Nous invitons les utilisateurs
+vigilant &agrave; nous informer d&egrave;s que les modules de
+fonctions ou macros pourront rester fonctionnels sans &ecirc;tre
+n&eacute;cessairement group&eacute;s dans la biblioth&egrave;que
+&laquo;&nbsp;Standard&nbsp;&raquo; d&rsquo;un fichier ou d&rsquo;une
+instance Open Office.</p>
+<h3 class="western">S&eacute;curit&eacute; des macros</h3>
+<p>La s&eacute;curit&eacute; des macros d&rsquo;Open Office est par
+d&eacute;faut fix&eacute;e au niveau <i>&eacute;lev&eacute;</i>.
+Seules les macros et fonctions <i>sign&eacute;es</i><span style="font-style: normal">
+peuvent &ecirc;tre autoris&eacute;es, sous r&eacute;serve d&rsquo;avoir
+accord&eacute; confiance au signataire de ces macros. Vous voudrez
+donc bien accorder la confiance &agrave; Louis-Aim&eacute; Becq de
+Fouqui&egrave;res, qui a sign&eacute; </span><span style="font-style: normal">les
+</span><span style="font-style: normal">macros et fonctions au moyen
+d&rsquo;une signature autonome, sans autorit&eacute; de
+certification. </span><span style="font-style: normal">Il vous est
+toujours possible de v&eacute;rifier le contenu des fonctions et
+macros avant d&rsquo;accorder votre confiance.</span></p>
+<p><span style="font-style: normal">S</span><span style="font-style: normal">i
+vous souhaitez transmettre un document Libre Office contenu ces
+fonctions, vous devrez les signer &agrave; votre tour. Il faut pour
+cela constituer un certificat de signature &eacute;lectronique.
+Certains &eacute;diteurs proposent la confection de signatures
+&eacute;lectroniques non certifi&eacute;es&nbsp;: des
+&laquo;&nbsp;auto-signatures&nbsp;&raquo;. Celles-ci suffisent pour
+activer des fonctions et macros Libre Office.</span></p>
+<h2 class="western">Installation des fonctions</h2>
+<h3 class="western">Insertion du mod&egrave;le de feuille de calcul</h3>
+<p>Le fichier <i>Antimissiles</i> ou <i><span style="text-decoration: none">Milesian
+Premium.ots</span></i> fourni est un mod&egrave;le de feuille de
+calcul LibreOffice. Vous pouvez  le copier dans votre r&eacute;pertoire
+de mod&egrave;les, ou l&rsquo;ouvrir et l&rsquo;enregistrer en tant
+que mod&egrave;le de feuille de calcul. 
+</p>
+<p>Cr&eacute;ez une nouvelle feuille de calcul sur la base de ce
+mod&egrave;le&nbsp;: cette nouvelle feuille comprend des fonctions
+suppl&eacute;mentaires de calcul calendaire d&eacute;crites infra.
+<i>Vous devrez toutefois signer les macros de cette feuille pour
+pouvoir les utiliser</i></p>
+<h3 class="western">Insertion en tant que fonctions de r&eacute;f&eacute;rence</h3>
+<p>Ouvrez la feuille <i>Milesian</i> ou<i> Milesian Premium, </i><span style="font-style: normal">ouvrez</span>
+le gestionnaire de macros (<i>Outils / Macros / G&eacute;rer les
+macros / LibreOffice Basic) </i><span style="font-style: normal">puis
+encore </span><i>G&eacute;rer.</i><span style="font-style: normal">
+Vous pouvez alors cliquer-d&eacute;placer les modules contenus dans
+la feuille vers la biblioth&egrave;que </span><i>Standard </i><span style="font-style: normal">de
+</span><i>Mes macros.</i><span style="font-style: normal"> Les
+fonctions seront alors disponibles avec toute feuille que vous
+ouvrirez. En revanche, les personnes prenant connaissance de vos
+fichiers Calc ne verront que les r&eacute;sultats des derniers
+calculs, et encore pas pour les appels en cascade. </span>
+</p>
+<h3 class="western">Gestion en biblioth&egrave;ques de modules</h3>
+<p>On peut en principe importer et exporter les biblioth&egrave;ques
+de modules. Malheureusement, la gestion des biblioth&egrave;ques ne
+fonctionne plus depuis la version 6 de LibreOffice.</p>
+<h3 class="western">Gestion par le biais d&rsquo;extensions</h3>
+<p>De m&ecirc;me, les extensions de fonctions utilisateurs ne
+marchent plus depuis la version 6 de LibreOffice.</p>
+<h1 class="western">Utilisation</h1>
+<p>Vous pouvez d&eacute;sormais</p>
+<p style="margin-left: 1.89cm; text-indent: -0.64cm">1.Cr&eacute;ez
+un fichier sur la base du mod&egrave;le, pour avoir une feuille
+disposant de mani&egrave;re autonome de la biblioth&egrave;que
+<i>Standard</i>&nbsp;du fichier. Il faudra signer les macros pour en
+autoriser l&rsquo;usage.</p>
+<p style="margin-left: 1.89cm; text-indent: -0.64cm">2. Copiez les
+modules dans la biblioth&egrave;que <i>Standard </i>dans vos macros,
+pour en disposer en permanence.</p>
+<p>Malheureusement, les fonctions n&rsquo;apparaissent pas dans la
+liste &laquo;&nbsp;Assistant Fonctions&nbsp;&raquo; &agrave; c&ocirc;t&eacute;
+de la barre de saisie. Il faut donc bien conna&icirc;tre leurs noms
+et leur liste de param&egrave;tres.</p>
+<h1 class="western">Architecture des modules</h1>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<b>MilesianCalendar</b>&nbsp;: 
+</p>
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
+Lire une date Calc, l'afficher et la d&eacute;composer en mil&eacute;sien,
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Cr&eacute;er une date &agrave; partir des coordonn&eacute;es jour,
+mois, ann&eacute;e en mil&eacute;sien,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Rechercher une date plusieurs mois mil&eacute;siens avant ou apr&egrave;s,
+ou une fin de mois mil&eacute;sien,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Calculer le jour julien &agrave; partir du jour Calc et
+r&eacute;ciproquement.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Jour de semaine &laquo;&nbsp;&eacute;tendue&nbsp;&raquo;, avec un
+type 0 par d&eacute;faut, r&eacute;sultat 0 &agrave; 6, dimanche=0&nbsp;;
+Les autres types utilis&eacute;s par Calc pour JOURSEM sont
+disponibles.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<b>MeanMoon</b>&nbsp;: Date de la plus proche phase de lune moyenne
+avant ou apr&egrave;s une date donn&eacute;e.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<b>DateParse</b> (Premium seulement)&nbsp;: d&eacute;chiffrer une
+expression de date standard ou mil&eacute;sienne et la transformer en
+nombre de type Date.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p>Le module MeanMoon peut &ecirc;tre utilis&eacute; seul
+&eacute;ventuellement. DateParse a besoin de MilesianCalendar.</p>
+<h1 class="western">Limites et pr&eacute;cautions d'utilisation</h1>
+<ol>
+	<li/>
+<p>L'objet Date est un nombre qui repr&eacute;sente une date
+	(partie enti&egrave;re) et une heure (partie fractionnaire). La
+	valeur 0 correspond au 30/12/1899 &agrave; 0h UTC.</p>
+	<li/>
+<p>Calc permet de g&eacute;rer tout objet date sans contr&ocirc;le
+	de borne. Nous avons pr&eacute;vu de limiter le domaine de validit&eacute;
+	des fonctions aux dates pour lesquelles la repr&eacute;sentation
+	Calc et les fonctions de restitutions sont correctes, ce qui
+	correspond aux ann&eacute;es 32767 av. J.C. &agrave; 32767 de notre
+	&egrave;re. 
+	</p>
+	<li/>
+<p>Une expression de date avec une ann&eacute;e positive sur 2
+	caract&egrave;res est convertie par Calc avec une ann&eacute;e entre
+	1930 et 2029.</p>
+	<li/>
+<p>Les expressions de dates ant&eacute;rieures au 01/01/0001
+	(calendrier julien) sont repr&eacute;sent&eacute;es par Calc avec
+	une ann&eacute;e en notation r&eacute;trograde, c&rsquo;est-&agrave;-dire
+	sans ann&eacute;e 0. La veille du 01/01/0001 est repr&eacute;sent&eacute;e
+	par 31/12/-0001. En revanche, les fonctions mil&eacute;siennes
+	consid&egrave;rent toujours les ann&eacute;es en notation relative,
+	avec une ann&eacute;e 0. La notation Calc est impropre&nbsp;: les
+	historiens, qui utilisent la notation r&eacute;trograde, pr&eacute;cisent
+	&laquo;&nbsp;avant J.-C.&nbsp;&raquo; et n&rsquo;utilisent pas de
+	signe &laquo;&nbsp;-&nbsp;&raquo; pour les ann&eacute;es ant&eacute;rieures
+	&agrave; 1. 
+	</p>
+	<li/>
+<p>La fonction DATE_PARSE (Premium) permet de saisir des dates
+	du calendrier julio-gr&eacute;gorien ou mil&eacute;sien, m&ecirc;me
+	avant l&rsquo;&egrave;re commune. Mais les ann&eacute;es sont not&eacute;es
+	en relatif&nbsp;: avec une ann&eacute;e 0 et un signe &laquo;&nbsp;-
+	&raquo; avant pour les ann&eacute;es ant&eacute;rieures &agrave;
+	l&rsquo;ann&eacute;e 0. Voir d&eacute;tail infra, &agrave; la
+	fonction DATE_PARSE. De plus, les ann&eacute;es non n&eacute;gatives
+	doivent &ecirc;tre pr&eacute;sent&eacute;es sur 3 chiffres, &agrave;
+	peine de rejet.</p>
+	<li/>
+<p>En Libre Office, la saisie et l&rsquo;affichage des dates
+	se r&eacute;f&egrave;rent au calendrier gr&eacute;gorien &agrave;
+	partir du 15/10/1582, au calendrier julien ant&eacute;rieurement.
+	Les expressions du 5 au 14/10/1582 provoquent une erreur.</p>
+	<li/>
+<p>Les fonctions standard ANNEE, MOIS, JOUR, appliqu&eacute;es
+	&agrave; une date restituent selon le calendrier gr&eacute;gorien
+	proleptique, et non pas julien. L&rsquo;ann&eacute;e est en notation
+	r&eacute;trograde, sans ann&eacute;e 0 mais avec un signe &laquo;&nbsp;-&nbsp;&raquo;
+	pour les ann&eacute;es ant&eacute;rieures &agrave; 1 A.D.</p>
+	<li/>
+<p>La fonction DAYOFWEEK_Ext fournie donne le rang du jour de
+	semaine avec une option suppl&eacute;mentaire non fournie ni par
+	Microsoft ni par LibreOffice</p>
+</ol>
+<ul>
+	<ul>
+		<li/>
+<p>par d&eacute;faut&nbsp;: (0=dimanche jusque 6=samedi) 
+		</p>
+		<li/>
+<p>- sinon vous pouvez utiliser les m&ecirc;mes types que
+		ceux propos&eacute;s par la fonction standard JOURSEM et obtenir
+		les m&ecirc;mes r&eacute;sultats.</p>
+	</ul>
+</ul>
+<ol start="9">
+	<li/>
+<p>La fonction MILESIAN_DISPLAY affiche l&rsquo;ann&eacute;e
+	avec au moins 3 chiffres, ce qui &eacute;vite toute ambigu&iuml;t&eacute;
+	de l&rsquo;&eacute;l&eacute;ment ann&eacute;e avec le quanti&egrave;me.
+	Cette fonction restitue un r&eacute;sultat m&ecirc;me pour les dates
+	situ&eacute;es au-del&agrave; des ann&eacute;es -32767 &agrave;
+	+32767.</p>
+</ol>
+<h1 class="western">Conseils g&eacute;n&eacute;raux pour des travaux
+impliquant de nombreuses dates.</h1>
+<p>&nbsp;</p>
+<h2 class="western">1. La gestion de l&rsquo;objet Date.</h2>
+<p>L&rsquo;objet Date ne pose pas de limite haute ou basse. 
+</p>
+<p>Par pr&eacute;caution, nos fonctions ne produisent que des dates
+situ&eacute;es dans la plage d&rsquo;ann&eacute;e -32767 &agrave;
++32767.</p>
+<p><br/>
+<br/>
+
+</p>
+<h2 class="western">2. Type de r&eacute;sultat</h2>
+<p>Les r&eacute;sultats des fonctions de ces modules ne peuvent pas
+&ecirc;tre typ&eacute;es Date en raison notamment de la faiblesse de
+la gestion d&rsquo;erreurs de Basic&nbsp;: en cas d&rsquo;erreur ou
+de sortie du domaine de validit&eacute;, il faut pouvoir informer
+l&rsquo;utilisateur par une cha&icirc;ne appropri&eacute;e.</p>
+<p>Le plus souvent il faut formater explicitement le r&eacute;sultat
+avec un des formats de date. Nous recommandons un format de date avec
+ann&eacute;e sur 4 chiffres.</p>
+<h1 class="western">Les fonctions utilisables et leurs param&egrave;tres,
+par module&nbsp;:</h1>
+<p>&nbsp;</p>
+<h2 class="western">#MilesianCalendar</h2>
+<p>&nbsp;</p>
+<p>DAYOFWEEK_Ext&nbsp;: Entier, 0 &agrave; 6 ou 1 &agrave; 7,
+repr&eacute;sentant le jour de semaine.</p>
+<p>Cette fonction donne un r&eacute;sultat pour toute valeur de
+l'objet Date, y compris avant l&rsquo;&egrave;re commune.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TheDate, date dont on cherche le jour de semaine.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DispType, option de repr&eacute;sentation&nbsp;:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0 ou d&eacute;faut&nbsp;: 0 &agrave; 6, 0 pour dimanche (option la
+plus simple, recommand&eacute;e par les math&eacute;maticiens)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1, correspondant &agrave; l&rsquo;option par d&eacute;faut de Calc
+(et d&rsquo;Excel)&nbsp;: 1 &agrave; 7, 1 pour dimanche</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;: 1 &agrave; 7, 1 pour lundi (comme Calc/Excel)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3&nbsp;: 0 &agrave; 6, 0 pour lundi (comme Calc/Excel)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+11 &agrave; 17&nbsp;: 1 &agrave; 7, 11&nbsp;: 1 pour lundi, 12&nbsp;:
+1 pour mardi, etc. (comme Calc/Excel)</p>
+<p>&nbsp;</p>
+<p>JULIAN_EPOCH_COUNT&nbsp;: Nombre, jour julien avec partie d&eacute;cimale
+correspondant &agrave; la date.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tre&nbsp;: TheDate, date et heure dont on cherche le
+jour julien. Rappel&nbsp;: une valeur enti&egrave;re du jour julien
+correspond &agrave; midi UTC.</p>
+<p>&nbsp;</p>
+<p>JULIAN_EPOCH_DATE&nbsp;: Objet Date, correspondant au jour julien
+donn&eacute; en param&egrave;tre.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tre&nbsp;: Julian_Count, le jour julien, nombre d&eacute;cimal
+correspond &agrave; une date et une heure.</p>
+<p>&nbsp;</p>
+<p>MILESIAN_IS_LONG_YEAR&nbsp;: Bool&eacute;en, indique si l'ann&eacute;e
+mil&eacute;sienne est abondante. Une ann&eacute;e mil&eacute;sienne
+abondante est une ann&eacute;e qui pr&eacute;c&egrave;de une ann&eacute;e
+bissextile. La r&egrave;gle d'intercalation mil&eacute;sienne est
+appliqu&eacute;e, donc les ann&eacute;es&nbsp;: -4001, -801, 2399,
+5599 etc. sont non abondantes. 
+</p>
+<p>&Agrave; part ces cas, ce sont les r&egrave;gles gr&eacute;goriennes
+qui s'appliquent.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tre&nbsp;: Year, ann&eacute;e dont on cherche &agrave;
+d&eacute;terminer le type</p>
+<p>&nbsp;</p>
+<p>MILESIAN_DATE&nbsp;: Objet Date correspondant &agrave; une date
+mil&eacute;sienne dont les composants sont donn&eacute;s en
+param&egrave;tres. 
+</p>
+<p>La date est enti&egrave;re, l'heure est 00h.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Year&nbsp;: Ann&eacute;e mil&eacute;sienne (positive ou n&eacute;gative,
+compt&eacute;e en relatif, avec une ann&eacute;e 0) 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Month&nbsp;: num&eacute;ro du mois (1 &agrave; 12) 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DayInMonth&nbsp;: Quanti&egrave;me dans le mois (1-31)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Si le triplet ne correspond pas &agrave; une date valide, la fonction
+retourne une erreur.</p>
+<p>&nbsp;</p>
+<p>MILESIAN_YEAR_BASE&nbsp;: Objet Date correspondant &agrave; la
+base d'une ann&eacute;e mil&eacute;sienne c'est &agrave; dire le jour
+pr&eacute;c&eacute;dent le 1 1m de l'ann&eacute;e &agrave; 0h.</p>
+<p>Permet notamment de chercher les chiffres cl&eacute;s&nbsp;: le
+clavedi ou dies illa, jour de semaine de ce jour, et l'&eacute;pacte
+mil&eacute;sienne.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: Year&nbsp;: l'ann&eacute;e dont on cherche
+la base.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p>MILESIAN_YEAR&nbsp;: Ann&eacute;e mil&eacute;sienne d'un objet
+Date 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: TheDate&nbsp;: objet Date, qui peut &ecirc;tre
+une date et heure&nbsp;: seule la date est consid&eacute;r&eacute;e.
+L'ann&eacute;e est restitu&eacute;e en notation relative&nbsp;:
+nombre positif, nul ou n&eacute;gatif.</p>
+<p>&nbsp;</p>
+<p>MILESIAN_MONTH&nbsp;: Num&eacute;ro de mois mil&eacute;sien d'un
+objet Date (1 &agrave; 12)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: TheDate&nbsp;: objet Date, qui peut &ecirc;tre
+une date et heure&nbsp;: seule la date est consid&eacute;r&eacute;e</p>
+<p>&nbsp;</p>
+<p>MILESIAN_DAY&nbsp;: Quanti&egrave;me dans le mois mil&eacute;sien
+d'un objet Date (1-31)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: TheDate&nbsp;: objet Date, qui peut &ecirc;tre
+une date et heure&nbsp;: seule la date est consid&eacute;r&eacute;e</p>
+<p>&nbsp;</p>
+<p>MILESIAN_DISPLAY&nbsp;: Une cha&icirc;ne de caract&egrave;res
+exprimant la date mil&eacute;sienne d'un objet Date</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TheDate&nbsp;: objet Date, qui peut &ecirc;tre une date et heure.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Wtime (optionnel)&nbsp;: 1 par d&eacute;faut. L'heure (partie
+d&eacute;cimale de la date) est &eacute;galement affich&eacute;e.<br/>
+Mettre
+&agrave; 0 pour ne pas afficher l&rsquo;heure.</p>
+<p>&nbsp;Dans l&rsquo;expression de date, l&rsquo;ann&eacute;e est
+toujours repr&eacute;sent&eacute;e avec au minimum trois chiffres.</p>
+<p>MILESIAN_MONTH_SHIFT&nbsp;: Date de m&ecirc;me quanti&egrave;me, n
+mois mil&eacute;siens avant ou apr&egrave;s une date donn&eacute;e.</p>
+<p>M&ecirc;me fonctionnement que MOIS.DECALER&nbsp;: le quanti&egrave;me
+31 peut devenir 30 si le mois cible n'a que 30 jours.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TheDate&nbsp;: date de d&eacute;part</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+MonthShift&nbsp;: nombre de mois de d&eacute;calage vers le futur (+)
+ou le pass&eacute; (-)</p>
+<p>&nbsp;</p>
+<p>MILESIAN_MONTH_END&nbsp;: Date de fin de mois mil&eacute;sien, n
+mois mil&eacute;siens avant ou apr&egrave;s une date donn&eacute;e. 
+</p>
+<p>M&ecirc;me fonctionnement que la fonction FIN.MOIS, (qui cherche
+une fin de mois gr&eacute;gorien)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TheDate&nbsp;: date de d&eacute;part</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+MonthShift&nbsp;: nombre de mois de d&eacute;calage vers le futur (+)
+ou le pass&eacute; (-)</p>
+<p>&nbsp;</p>
+<h2 class="western">#MeanMoonPhase</h2>
+<p>&nbsp;</p>
+<p>Calcul de derni&egrave;re ou de prochaine phase de lune. Marge
+d'erreur de 6 heures pour +/- 3000 ans &agrave; partir de l'an 2000.</p>
+<p>&nbsp;</p>
+<p>MOON_PHASE_LAST&nbsp;: La date de la derni&egrave;re nouvelle
+lune, ou de la derni&egrave;re phase lunaire sp&eacute;cifi&eacute;e.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L'horodatage est en heure TT, tr&egrave;s proche de l'heure UTC &agrave;
+nos &eacute;poques.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Le calcul est fond&eacute; sur une lune moyenne lin&eacute;aire (non
+corrig&eacute;e). La nouvelle lune moyenne de r&eacute;f&eacute;rence
+est la premi&egrave;re lune moyenne de l'an 2000.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+FromDate&nbsp;: jour auquel on se r&eacute;f&egrave;re ; 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+MoonPhase (=0 si non pr&eacute;sent)&nbsp;: 0=nouvelle lune,
+1=premier quartier, 2=pleine lune, 3=dernier quartier, erreur pour
+toute autre valeur.</p>
+<p>&nbsp;</p>
+<p>MOON_PHASE_NEXT&nbsp;: Le date de la prochaine nouvelle lune, ou
+de la prochaine phase lunaire sp&eacute;cifi&eacute;e.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L'horodatage est en heure TT, tr&egrave;s proche de l'heure UTC &agrave;
+nos &eacute;poques.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Le calcul est fond&eacute; sur une lune moyenne lin&eacute;aire (non
+corrig&eacute;e). La nouvelle lune moyenne de r&eacute;f&eacute;rence
+est la premi&egrave;re lune moyenne de l'an 2000.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+FromDate&nbsp;: jour auquel on se r&eacute;f&egrave;re ; 
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+MoonPhase (=0 si non pr&eacute;sent)&nbsp;: 0=nouvelle lune,
+1=premier quartier, 2=pleine lune, 3=dernier quartier, erreur pour
+toute autre valeur.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<h2 class="western">#DateParse</h2>
+<p>&nbsp;</p>
+<p>Analyseur d'expression de date, sp&eacute;cifique de la version
+Premium.</p>
+<p>Ce module ne comprend qu'une seule fonction. Il n&eacute;cessite
+le module MilesianCalendar.</p>
+<p>L'&eacute;criture en Basic est probablement peu adapt&eacute;e &agrave;
+des donn&eacute;es en tr&egrave;s grande masse. Toutefois,
+l&rsquo;utilisation de DATE_PARSE sur une base de 10&nbsp;000
+entr&eacute;es, avec un argument lui-m&ecirc;me r&eacute;sultat d&rsquo;un
+calcul avec quatre fonctions de base, et en relation avec
+MILESIAN_DISPLAY, ne prend que 20 secondes (sur HP Spectre Windows
+10).</p>
+<p>&nbsp;</p>
+<p>DATE_PARSE&nbsp;: Transforme une cha&icirc;ne de caract&egrave;res
+bien form&eacute;e en objet Date.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tres&nbsp;: MyCell, cha&icirc;ne de caract&egrave;res&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p>La cha&icirc;ne peut comprendre une date et une heure. L'heure est
+selon le canevas h&nbsp;:m ou h:m:s, et est s&eacute;par&eacute;e de
+la date par un ou plusieurs espaces.</p>
+<p>La date peut &ecirc;tre julio-gr&eacute;gorienne, mais aussi
+mil&eacute;sienne. Elle est consid&eacute;r&eacute;e comme
+mil&eacute;sienne&nbsp;:</p>
+<p>- soit si elle commence par M, exemple&nbsp;: M2015-07-01, et dans
+ce cas l'ordre est ann&eacute;e, mois, jour (optionnel),<br/>
+- soit
+si elle contient un mois mil&eacute;sien en notation internationale,
+par exemple 1/1m/2000 ou 30 12m 2016, mais pas 15/01m/1950, car 01m
+n'est pas un mois mil&eacute;sien.</p>
+<p>Une notation redondante comme M2015-7m-01 est rejet&eacute;e.</p>
+<p>Les s&eacute;parateurs entre &eacute;l&eacute;ments de date sont
+soit l'espace, soit &quot;/&quot;, &quot;.&quot;, ou &quot;-&quot;.
+Le m&ecirc;me s&eacute;parateur doit &ecirc;tre utilis&eacute;.</p>
+<p>Il peut y avoir plusieurs espaces l&agrave; o&ugrave; un seul est
+n&eacute;cessaire.</p>
+<p>Une &eacute;ventuelle virgule est ignor&eacute;e. Mais non pas un
+point coll&eacute; au quanti&egrave;me &agrave; la mani&egrave;re
+allemande ou scandinave, qui provoquera une erreur.</p>
+<p>L'ann&eacute;e est toujours cod&eacute;e avec au moins trois
+caract&egrave;res, et peut comprendre un signe moins. C'est ainsi
+qu'on la reconna&icirc;t.</p>
+<p>M&ecirc;me pour une expression de date julio-gr&eacute;gorienne,
+l&rsquo;ann&eacute;e est r&eacute;put&eacute;e repr&eacute;sent&eacute;e
+en <i>notation relative</i>&nbsp;: l&rsquo;&eacute;chelle des ann&eacute;es
+comprend une ann&eacute;e 0 pr&eacute;c&eacute;d&eacute;e d'ann&eacute;es
+n&eacute;gatives. Attention, depuis la version 6 de Calc, la
+repr&eacute;sentation de dates ant&eacute;rieures au 1/1/0001 est
+possible, mais les ann&eacute;es sont en <i>notation r&eacute;trograde</i>
+utilisant &ndash; &agrave; tort &ndash; le signe &laquo;&nbsp;-&nbsp;&raquo;.
+L&rsquo;ann&eacute;e 0 n&rsquo;existe pas, le jour pr&eacute;c&eacute;dant
+le 1/1/0001 est repr&eacute;sent&eacute; en 31/12/-0001, qui
+correspond au 31 d&eacute;cembre 1 av. J.-C. des historiens,
+31/12/0000 en notation relative. DATE_PARSE est pertinent pour les
+expressions de dates astronomiques. 
+</p>
+<p>Il faut sp&eacute;cifier au moins deux &eacute;l&eacute;ments de
+dates, dont le mois.</p>
+<p>Si l'ann&eacute;e n'est pas sp&eacute;cifi&eacute;e (pas d'&eacute;l&eacute;ment
+de plus de deux caract&egrave;res), l'ann&eacute;e courante du
+calendrier en cours est choisie&nbsp;; par exemple, si nous sommes le
+31/12/2015 (10 1m 2016), la cha&icirc;ne 21/03 donnera 21/03/2015,
+alors que la cha&icirc;ne 30/4m donnera 30/4m/2016.</p>
+<p>Si le quanti&egrave;me du mois (jour du mois) n'est pas sp&eacute;cifi&eacute;,
+le quanti&egrave;me 1 est choisi.</p>
+<p>&nbsp;</p>
+<h1 class="western">Exemples</h1>
+<p>L&rsquo;onglet &laquo;&nbsp;Jours remarquables&nbsp;&raquo; de la
+feuille t&eacute;l&eacute;charg&eacute;e comprend des exemples de
+calculs n&rsquo;utilisant pas la fonction DATE_PARSE, mais utilisant
+les autres fonctions.</p>
+<p>&nbsp;</p>
+<h1 class="western">Informations, commentaires, propositions
+d'am&eacute;lioration, signalement d'erreurs&nbsp;:</h1>
+<p>www.calendriermilesien.org</p>
+<p>louis-aime@calendriermilesien.org</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<div title="footer">
+	<p align="center" style="margin-top: 0.5cm; margin-bottom: 0cm; line-height: 100%">
+	<sdfield type=PAGE subtype=RANDOM format=PAGE>10</sdfield></p>
+</div>
+</body>
+</html>
