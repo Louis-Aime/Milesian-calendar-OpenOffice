@@ -13,9 +13,11 @@ Attribute VB_Name = &quot;DateParse&quot;
 &apos;are permitted without authorisation
 &apos;DATE_PARSE, applied to any Date-Time expression as a string, returns the corresponding Date series number.
 &apos;This module uses MilesianCalendar
-&apos;Version of this module: M2018-09-01
+&apos;Version of this module: M2018-12-24: adapted to date capacities of Open Office - LIbre Office version 6
 
-Const InvArgMsg = &quot;Milesian: invalid argument &quot;	&apos;Error message displayed in place of function result, for non-typed functions (already defined in Milesian)
+Const HighDate = 11274306 &apos;Highest date that is properly handled in Calc, high limit for DATE_PARSE
+Const LowDate = -12661859 &apos;Lowest date that is properly handled in Calc, low limit fo DATE_PARSE
+Const InvArgMsg = &quot;Err (Milesian) &quot;	&apos;Error message displayed in place of function result, for non-typed functions
 
 Function DATE_PARSE(TheCell As String) &apos;A String is converted into a Numeric that corresponds to a Date
 Attribute DATE_PARSE.VB_Description = &quot;Extract date and time value from string. Standard or Milesian expression. Negative years possible.&quot;
@@ -28,25 +30,32 @@ Attribute DATE_PARSE.VB_Description = &quot;Extract date and time value from str
 &apos;   3. Extract Time part, store in T
 &apos;   4. Split Date part into minimum 2 elements
 &apos;   5. Find Month element after its pattern (&quot;M&quot; month marker)
-&apos;   6. Find Year element, of provide present year
-&apos;   7. Find Day element of provide &quot;1&quot; by default, return
-&apos;   Note: authorised delimiters are &quot;./-&quot;. Comma is dropped. &quot;m&quot; of Milesian month is recognised. Other lead to error.
+&apos;   6. Find Year element, or else provide present year
+&apos;   7. Find Day element, or else provide &quot;1&quot; by default, return
+&apos;   Note: authorised delimiters are &quot;./-&quot;. Comma followed with blank is dropped. &quot;m&quot; of Milesian month is recognised. Other lead to error.
+&apos;   &quot;:&quot; delimiter is specific to time part. May only appear in last word of string.
 &apos;   If as first character: canvas is yyy/mm/dd or similar, even M-yyy-mm-dd is possible.
 &apos;   If not as first, find and extract &quot;m&quot;, compute d, m and year elements, call MILESIAN_DATE.
 On Error Goto ErrorHandler
-&apos;1. Prepare: Convert string to Uppercase and drop blanks in excess
+
 Dim Elem, I    &apos;Elem: the array of elements of TheCell when splitted, I: a standard index
 Dim T As Double, Y, M, D    &apos;The date elements
-Dim Yindex, Mindex, Dindex    &apos;Index of year, month and day in Elem, -1 means &quot;unknown&quot;
+Dim Yindex, Mindex, Dindex, YSign    &apos;Index of year, month and day in Elem, -1 means &quot;unknown&quot;
 Dim Delimiters      &apos;The list of possible delimiters (outside &quot; &quot;)
 Delimiters = Array(&quot;/&quot;, &quot;.&quot;, &quot;-&quot;)
+Dim DelimNumber, BlankNumber
+DelimNumbers = Array(0, 0, 0) &apos;Later will count how many non-blank delimiters
 
+&apos;1. Prepare: Convert string to Uppercase, drop blanks in excess, remove &quot;,&quot;, &quot;E&quot; as they are misinterpreted
 Y = 0	&apos;We need Y to be initialized
+YSign = 1	&apos;First assumption: the sign of year should not be changed
 TheCell = Trim(TheCell) &apos;Suppress all leading and trailing blank
 TheCell = UCase(TheCell) &apos;All uppercase
 &apos;In Open Office: Drop initial &quot;&apos;&quot;
 If Left(TheCell, 1) = &quot;&apos;&quot; Then TheCell = Right(TheCell, Len(TheCell)-1)
 TheCell = Replace(TheCell, &quot;, &quot;, &quot; &quot;)    &apos;Drop comma followed by blank (which is authorised)
+If InStr(TheCell, &quot;,&quot;) &gt; 0 Then Goto ErrorHandler &apos;No other comma allowed in date string
+If InStr(TheCell, &quot;E&quot;) &gt; 0 Then Goto ErrorHandler &apos;No &quot;E&quot; of a possible wrong numeric value
 Elem = Split(TheCell)   &apos;Split with &quot; &quot;
 TheCell = &quot;&quot;            &apos;Reconstruct TheCell
 For I = LBound(Elem) To UBound(Elem)
@@ -88,25 +97,42 @@ If InStr(Elem(UBound(Elem)), &quot;:&quot;) &gt; 0 Then    &apos;Last elements h
 Else
     T = TimeValue(&quot;00:00:00&quot;)
 End If
-&apos;Here T holds the time part, TheCell holds the date part, Elem holds a possible detailed decomposition.
+If UBound(Elem) &gt; 2 Then Goto ErrorHandler &apos; Not more than 3 elements, excluding time part
+&apos;Here T holds the time part, TheCell holds the date part, Elem holds a possible detailed decomposition with at most 3 elements
     
 &apos;4. Extract Date elements, whichever the separator is
 &apos;4.1 To begin with, solve case where significant cell begins with &quot;-&quot; and consider this first part as year.
 If Left(TheCell,1) = &quot;-&quot; Then
 	If K=&quot;D&quot; Then Goto ErrorHandler	&apos;No &quot;free&quot; date string shall begin with a minus sign !! 
 	&apos; From here we know that there was a letter before the minus sign, so this sign is for the year only.
-	Yindex = 0			&apos;Year found
-	Y = Val(TheCell)	&apos;Year value (negative) is first part of TheCell
+	Yindex = 0	&apos;Year found (already)
+	YSign = -1	&apos;As we drop initial &quot;-&quot; sign, Year sign should be changed later
 	TheCell = Right(TheCell, Len(TheCell) - 1)	&apos;Drop initial &quot;-&quot; which is not a separator
 End If
-&apos;Extract remaining part
-I = UBound(Elem)
-Do While UBound(Elem) = LBound(Elem) And I &lt;= UBound(Delimiters) &apos;only one element?  Try other delimiters
-  Elem = Split(TheCell, Delimiters(I), 3)
-  I = I + 1
-  Loop
-If UBound(Elem) = LBound(Elem) Then Goto ErrorHandler  &apos;We did not find how to split
-If Y &lt; 0 Then Elem(Yindex) = Y	&apos;Meanwhile we found the year, a negative value
+&apos;4.2 Extract remaining part, by searching the &quot;most successfull&quot; separator
+DelimNumber = -2 &apos; Means: we have not found which delimiter is used
+If UBound(Elem) &gt; LBound (Elem) Then DelimNumber = -1 &apos;Means: the space is a possible delimiter, see the other ones
+For I = LBound(Delimiters) To UBound(Delimiters)
+	Elem = Split (TheCell, Delimiters(I))
+	If Ubound(Elem) &gt; LBound(Elem) Then &apos;We have a possible delimiter
+		If DelimNumber = -2 Then 
+			DelimNumber = I &apos;We did not have one before, now we have found
+		Else &apos;Another delimiter seems to work. If not &quot;-&quot; (which is the last one), let us drop.
+			If I &lt; UBound(Delimiters) Then Goto ErrorHandler &apos;The string is not properly written
+		End If 
+	End If
+	Next I
+If DelimNumber = -2 Then 
+	Goto ErrorHandler &apos;We did not find how to split
+Else
+	If DelimNumber = -1 Then
+		Elem = Split (TheCell)
+	Else
+		Elem = Split (TheCell, Delimiters(DelimNumber))
+	End If
+End If
+If UBound(Elem) &gt; 2 Then Goto ErrorHandler	&apos;Not more than 3 elements
+If Yindex = 0 Then Elem(Yindex) = YSign * Elem(Yindex)	&apos;Meanwhile we found the year, a negative value
 	
 &apos;5. Check whether one element, and only one, is a milesian month notation:
 &apos;Search elements looking like &quot;1M&quot; to &quot;12M&quot;, as long as there is no other indication
@@ -124,9 +150,11 @@ For I = LBound(Elem) To UBound(Elem)    &apos;Examine each element
 
 &apos;6. Search for year element: negative, or stricly positive with at least three (numeric) character, whether first or last element, or non-existent
 &apos;Note: this part is not valid if we authorise month names, for other calendars
-If Yindex = -1 Then &apos;If Year still not found
+If Yindex &gt; -1 Then	&apos;We may already know which element is the year, let us check it
+	If Not(IsNumeric(Elem(Yindex)) And (Len(Elem(Yindex)) &gt;= 3 Or Val(Elem(Yindex)) &lt;= 0)) Then Goto ErrorHandler
+Else &apos;Year still not found
   For I = LBound(Elem) To UBound(Elem)    &apos;Examine each element
-    If IsNumeric(Elem(I)) And (Len(Elem(I)) &gt;= 3 Or Val(Elem(I)) &lt;= 0) Then    &apos;This can represent a year
+    If IsNumeric(Elem(I)) And (Len(Elem(I)) &gt;= 3 Or Val(Elem(I)) &lt; 0) Then    &apos;This can represent a year
         If Yindex = I Or Yindex = -1 Then   &apos;Year field recognised
             Yindex = I
           Else                              &apos;Only one year field authorised
@@ -134,8 +162,8 @@ If Yindex = -1 Then &apos;If Year still not found
           End If
       End If
     Next I
-  If K = &quot;M&quot; And Yindex = -1 And UBound(Elem) = 2 Then Goto ErrorHandler &apos;No positive 2-char year authorised in Milesian notation
 End If
+If K = &quot;M&quot; And Yindex = -1 And UBound(Elem) = 2 Then Goto ErrorHandler &apos;No positive 2-char year authorised in Milesian notation
 
 &apos;7. Find whether there is a Day indication, make last computations and return
 Select Case K
@@ -162,19 +190,23 @@ Select Case K
     		Y1 = Y1 + 4
     		D1 = DateValue(D &amp; &quot;/&quot; &amp; Elem(Mindex) &amp; &quot;/&quot; &amp; &quot;00&quot; &amp; Y1)	&apos;Computed a shifted date as a long integer
     		D1 = D1 + 1461*Olymp
-    		DATE_PARSE = D1 + T
     	Else
     		D1 = DateValue(TheCell) &apos;Force conversion of the date to a number
-        	DATE_PARSE = D1 + T    &apos; Return always a Double
-        End If	
+        End If
+        If D1 &lt; LowDate Or D1 &gt; HighDate Then Goto ErrorHandler
+       	DATE_PARSE = D1 + T    &apos; Return always a Double
+	
     Case &quot;M&quot;    &apos;At this level, Mindex is known  (&gt;-1). Find and check other elements.
+    	Dim ComputedDate
         If Mindex &gt; 1 Then Goto ErrorHandler  &apos;Month may never be indicated as 3rd element
         M = Val(Elem(Mindex))
+        &apos;If M &lt;&gt; Int(M) Then Goto ErrorHandler
         If Yindex = -1 Then &apos;Year is not specified, provide with today&apos;s date
             Y = MILESIAN_YEAR(Date) &apos;Today&apos;s date
         Else	&apos;Place of Year is known, test whether it is a valid year
-        	If IsNumeric(Elem(Dindex)) Then
-            	Y = Val(Elem(Yindex))
+        	If IsNumeric(Elem(Yindex)) Then
+            	Y = Val(Elem(Yindex)) &apos;The Val function ignores the comma !
+            	&apos;If Y &lt;&gt; Int(Y) Then Goto ErrorHandler
             Else
             	Goto ErrorHandler
             End If
@@ -188,13 +220,16 @@ Select Case K
         If Dindex &gt; -1 Then &apos;D found
             If IsNumeric(Elem(Dindex)) Then
                 D = Val(Elem(Dindex))
+                &apos;If D &lt;&gt; Int(D) Then Goto ErrorHandler
             Else
                 Goto ErrorHandler
             End If
         Else    &apos;D was not specified
             D = 1
         End If
-        DATE_PARSE = MILESIAN_DATE(Y, M, D) + T
+        ComputedDate = MILESIAN_DATE(Y, M, D)
+        If ComputedDate = InvArgMsg Then Goto ErrorHandler
+        DATE_PARSE = ComputedDate + T
     Case Else
         Goto ErrorHandler
     End Select
