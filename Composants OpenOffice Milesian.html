@@ -6,7 +6,7 @@
 	<meta name="generator" content="LibreOffice 6.0.7.3 (Windows)"/>
 	<meta name="author" content="Louis-Aim&eacute; de Fouqui&egrave;res"/>
 	<meta name="created" content="2018-01-29T23:12:43.662000000"/>
-	<meta name="changed" content="2018-12-15T23:51:51.373000000"/>
+	<meta name="changed" content="2019-01-03T22:27:11.247000000"/>
 	<style type="text/css">
 		@page { margin: 2cm }
 		p { margin-bottom: 0.25cm; line-height: 120% }
@@ -19,6 +19,7 @@
 		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
 		h3.cjk { font-family: "Microsoft YaHei"; font-size: 14pt }
 		h3.ctl { font-family: "Lucida Sans"; font-size: 14pt }
+		a:link { so-language: zxx }
 	</style>
 </head>
 <body lang="fr-FR" dir="ltr">
@@ -26,7 +27,7 @@
 <font face="Liberation Sans, sans-serif"><font size="6" style="font-size: 28pt"><b>Composants
 OpenOffice Milesian et OpenOffice Milesian Premium</b></font></font></p>
 <p style="margin-bottom: 0cm; line-height: 100%">&nbsp;</p>
-<p>Version M2018-12-25 &ndash; calendriermilesien.org</p>
+<p>Version M2019-01-15 &ndash; calendriermilesien.org</p>
 <p>Fonctions de calculs calendaires en langage Basic pour LibreOffice
 Calc et &eacute;quivalents Open Office. 
 </p>
@@ -34,7 +35,7 @@ Calc et &eacute;quivalents Open Office.
 <p>Les programmes et leurs commentaires sont r&eacute;dig&eacute;s en
 anglais.</p>
 <p>Auteur&nbsp;: Louis-Aim&eacute; de Fouqui&egrave;res, Miletus SARL
-2017-2018 (www.calendriermilesien.org).</p>
+2017-2019 (www.calendriermilesien.org).</p>
 <p>Test&eacute; sur LibreOffice 6.0.7.3 fran&ccedil;ais sous Windows
 10.</p>
 <h1 class="western">Licence</h1>
@@ -320,12 +321,9 @@ correspond &agrave; une date et une heure.</p>
 <p>MILESIAN_IS_LONG_YEAR&nbsp;: Bool&eacute;en, indique si l'ann&eacute;e
 mil&eacute;sienne est abondante. Une ann&eacute;e mil&eacute;sienne
 abondante est une ann&eacute;e qui pr&eacute;c&egrave;de une ann&eacute;e
-bissextile. La r&egrave;gle d'intercalation mil&eacute;sienne est
-appliqu&eacute;e, donc les ann&eacute;es&nbsp;: -4001, -801, 2399,
-5599 etc. sont non abondantes. 
+bissextile. La m&ecirc;me r&egrave;gle d'intercalation solaire que
+pour le calendrier gr&eacute;gorien est appliqu&eacute;e ici. 
 </p>
-<p>&Agrave; part ces cas, ce sont les r&egrave;gles gr&eacute;goriennes
-qui s'appliquent.</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 Param&egrave;tre&nbsp;: Year, ann&eacute;e dont on cherche &agrave;
 d&eacute;terminer le type</p>

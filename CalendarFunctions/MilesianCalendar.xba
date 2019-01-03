@@ -15,11 +15,11 @@ Attribute VB_Name = &quot;MilesianCalendar&quot;
 &apos;Functions are aimed at extending Date &amp; Time functions, and use similar parameters syntax in English
 &apos;Version M2018-08-30
 &apos;M2018-08-30: modified MILESIAN_DISPLAY, year always with at least 3-digits
-&apos;M2018-12-25: 
+&apos;M2019-01-15: solar intercalation rule is same as Gregorian
 &apos; changed type of Y to Long in Milesian_Date_Element
 &apos; modified error handling and error message, mostly with untyped function
 &apos; defined highest a lowest dates handled with Calc, for MILESIAN_DATE; milesian figures and display without limitation
-Const MStoPresentEra As Long = 986163 &apos;Offset between 1/1m/-800 epoch and Microsoft origin (1899-12-30T00 is 0)
+Const MStoPresentEra As Long = 693969 &apos;Offset between 1/1m/000 epoch and Microsoft origin (1899-12-30T00 is 0)
 Const MStoJulianMinus05 As Long = 2415018 &apos;Offset between julian day epoch and Microsoft origin, minus 0.5
 Const HighDate = 11274306 &apos;Highest date that is properly handled in Calc, high limit for MILESIAN_DATE
 Const LowDate = -12661859 &apos;Lowest date that is properly handled in Calc, low limit for MILESIAN_DATE
@@ -100,7 +100,7 @@ Function MILESIAN_IS_LONG_YEAR(ByVal Year) As Boolean
 On Error Goto ErrorHandler
   If Year &lt;&gt; Int(Year) Or Year &lt; LowYear Or Year &gt; HighYear Then Goto ErrorHandler &apos;Check that we have an integer numeric value
   Year = Year + 1
-  MILESIAN_IS_LONG_YEAR = PosMod (Year,4) = 0 And (PosMod (Year,100) &lt;&gt; 0 Or (PosMod(Year, 400) = 0 And PosMod(Year+800, 3200) &lt;&gt; 0))
+  MILESIAN_IS_LONG_YEAR = PosMod (Year,4) = 0 And (PosMod (Year,100) &lt;&gt; 0 Or PosMod(Year, 400) = 0)
   Exit Function
 ErrorHandler:
   &apos;MILESIAN_IS_LONG_YEAR = InvArgMsg
@@ -125,8 +125,7 @@ If Year &lt;&gt; Int(Year) Or Month &lt;&gt; Int(Month) Or DayInMonth &lt;&gt; I
 	M1 = Month - 1 &apos;Count month rank, i.e. 0..11
 	Milesian_IntegDiv M1, 2, B, M1 &apos;B = full bimesters, M1 = 1 if a full month added, else 0
 	If DayInMonth &lt; 31 Or (M1 = 1 And (B &lt; 5 Or MILESIAN_IS_LONG_YEAR(Year))) Then
-	  Year = Year + 800    &apos;Set Epoch to the year -800
-	  A = PosDiv (Year, 4) - PosDiv(Year, 100) + PosDiv(Year, 400) - PosDiv(Year, 3200) &apos;Sum non-long terms: leap days
+	  A = PosDiv (Year, 4) - PosDiv(Year, 100) + PosDiv(Year, 400) &apos;Sum non-long terms: leap days
 	  D = Year            &apos;Force long-integer conversion
 	  D = D * 365      &apos;Begin computation of days in long-integer;
 	  D = D - MStoPresentEra - 1 + B * 61 + M1 * 30 + A + DayInMonth &apos;Computations in long-integer first
@@ -148,13 +147,11 @@ Function MILESIAN_YEAR_BASE(ByVal Year As Long) &apos;The Year base or Doomsday 
 On Error Goto ErrorHandler
 If Year &lt;&gt; Int(Year) Or Year &lt; LowYear Or Year &gt; HighYear Then Goto ErrorHandler
 Dim A As Integer, D As Long, Result As Date
-Year = Year + 800    &apos;Set Epoch to the year -800
 D = Year            &apos;Force long-integer conversion
 D = D * 365      &apos;Begin computation of days in long-integer;
-A = PosDiv (Year, 4) - PosDiv(Year, 100) + PosDiv(Year, 400) - PosDiv(Year, 3200)
+A = PosDiv (Year, 4) - PosDiv(Year, 100) + PosDiv(Year, 400)
 D = D - MStoPresentEra + A - 1           &apos;Computations in long-integer first
-Result = D
- MILESIAN_YEAR_BASE = Result
+MILESIAN_YEAR_BASE = D
 Exit Function
 ErrorHandler: 
  MILESIAN_YEAR_BASE = InvArgMsg
@@ -173,10 +170,8 @@ Dim Cycle As Long, Day As Long      &apos;Cycle is used serveral times with a di
 Day = Int(DNum)                      &apos;Initiate Day as highest integer lower or equal to DNum (force Dnum to its numeric expression)
 T = DNum - Day		&apos; Time part, 0 &lt;= T &lt; 1
 Day = Day + MStoPresentEra
-Milesian_IntegDiv Day, 1168775, Cycle, Day   &apos;Day is day rank in Milesian era (starting from 1/1m/-800), Cycle is era (0 begins 1/1/-800)
-Y = -800 + Cycle * 3200
 Milesian_IntegDiv Day, 146097, Cycle, Day    &apos;Day is day rank in 400 years period, Cycle is quadrisaeculum
-Y = Y + Cycle * 400
+Y = Cycle * 400
 Milesian_IntegDivCeiling Day, 36524, 4, Cycle, Day   &apos;Day is day rank in century, Cycle is rank of century
 Y = Y + Cycle * 100
 Milesian_IntegDiv Day, 1461, Cycle, Day              &apos;Day rank in quadriannum
@@ -308,12 +303,6 @@ End Function
 Function JULIAN_EPOCH_COUNT(TheDate)
 &apos;A dared strategy: compute directly Julian count as if a date, but convert into a double before returning
 	Dim Result As Double	
-&apos;    Dim IntDate As Long, TimePart As Double
-&apos;    TimePart = TheDate
-&apos;    IntDate = Int(TimePart)  &apos;Integer part is Date at 00:00
-&apos;    TimePart = TheDate - IntDate     &apos;Time in day
-&apos;    TimePart = TimePart + 0.5       &apos;...shifted to Julian Day convention
-&apos;    IntDate = IntDate + MStoJulianMinus05 &apos;Epoch shift
 	Result = TheDate + MStoJulianMinus05 + 0.5
     JULIAN_EPOCH_COUNT = Result &apos;TimePart + IntDate
 End Function
