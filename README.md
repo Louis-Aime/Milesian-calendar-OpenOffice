@@ -65,13 +65,10 @@ Boolean, whether the year is long (366 days) or not.
 * Year, the year in question. 
 
 A long Milesian year is just before a leap year, e.g. 2015 is a long year because 2016 is a leap year. 
-The Milesian calendar applies the Gregorian rules all the time, i.e. even before 1582, 
-and applies a proposed supplementary rule: 
-years -4001, -801, 2399, 5599 etc. every 3200 years, are *not* long. 
-e.g. 1899 is *not* long whereas 1999 is.
+The Milesian calendar applies the Gregorian rules all the time, i.e. even before 1582.
 
 ### MILESIAN_YEAR_BASE (Year) 
-Date of the day before the 1 1m of year Y, i.e. the "doomsday".
+Date of the day before the 1 1m of year Y, i.e. the "doomsday" of year Y.
 
 ### JULIAN_EPOCH_COUNT (Date)
 Decimal Julian Day from time stamp, deemed UTC date. 
@@ -95,7 +92,7 @@ Date of last new moon, or of other specified moon phase. Result is in Terrestria
 * FromDate: Base date (deemed UTC);
 * MoonPhase (0 by default): 0 for new moon, 1 for 1st quarter, 2 for full moon, 3 for last quarter.
 ### NextMoonPhase (FromDate, Moonphase)
-Similar, but computes next moon phase.
+Similar, but computes date of next moon phase.
 
 ## DateParse
 This module has only a string parser, that converts a (numeric) Julio-Gregorian or Milesian date or date-time expression 
