@@ -19,6 +19,7 @@ Attribute VB_Name = &quot;MilesianCalendar&quot;
 &apos; changed type of Y to Long in Milesian_Date_Element
 &apos; modified error handling and error message, mostly with untyped function
 &apos; defined highest a lowest dates handled with Calc, for MILESIAN_DATE; milesian figures and display without limitation
+&apos;M2019-06-30: set MILESIAN_YEAR_BASE time to 7:30 UTC for computation of Epact
 Const MStoPresentEra As Long = 693969 &apos;Offset between 1/1m/000 epoch and Microsoft origin (1899-12-30T00 is 0)
 Const MStoJulianMinus05 As Long = 2415018 &apos;Offset between julian day epoch and Microsoft origin, minus 0.5
 Const HighDate = 11274306 &apos;Highest date that is properly handled in Calc, high limit for MILESIAN_DATE
@@ -151,7 +152,7 @@ D = Year            &apos;Force long-integer conversion
 D = D * 365      &apos;Begin computation of days in long-integer;
 A = PosDiv (Year, 4) - PosDiv(Year, 100) + PosDiv(Year, 400)
 D = D - MStoPresentEra + A - 1           &apos;Computations in long-integer first
-MILESIAN_YEAR_BASE = D
+MILESIAN_YEAR_BASE = D + 0.3125
 Exit Function
 ErrorHandler: 
  MILESIAN_YEAR_BASE = InvArgMsg
