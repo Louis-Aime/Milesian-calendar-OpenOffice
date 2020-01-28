@@ -17,6 +17,10 @@ MIT licence applies
 1. In next window, you should select "replace library", in particular if you update. The other option is up to you.
 1. From now on, the "CalendarFunctions" library is included (or referred) in your file, or in your personal macros. 
 
+## Description document
+THe HTML file on this repository describes the package as downloaded from www.calendriermilesien.org. 
+On this repository you only find the VB source.
+
 ## Security issues
 With version 6, only the "Standard" library works. Using to Tools/Macro/manage/Basic and Manage window, 
 drag and drop the modules onto the "Standard" library of *my macros*, or of the file you wish to use.
