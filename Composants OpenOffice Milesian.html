@@ -3,10 +3,10 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=windows-1252"/>
 	<title></title>
-	<meta name="generator" content="LibreOffice 6.1.6.3 (Windows)"/>
+	<meta name="generator" content="LibreOffice 7.0.3.1 (Windows)"/>
 	<meta name="author" content="Louis-Aim&eacute; de Fouqui&egrave;res"/>
 	<meta name="created" content="2018-01-29T23:12:43.662000000"/>
-	<meta name="changed" content="2020-01-28T20:09:04.238000000"/>
+	<meta name="changed" content="2021-01-12T21:20:46.820000000"/>
 	<style type="text/css">
 		@page { size: 21cm 29.7cm; margin: 2cm }
 		p { margin-top: 0.25cm; margin-bottom: 0cm; line-height: 120%; orphans: 2; widows: 2; background: transparent }
@@ -51,20 +51,61 @@ Calc et &eacute;quivalents Open Office.
 <h2 class="western">&nbsp;Environnement et codage</h2>
 <ul>
 	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Version
-	pr&eacute;sente M2020-02-08.</font></font></p>
+	pr&eacute;sente M2021-01-22.</font></font></p>
 	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Code
 	source et leurs commentaires r&eacute;dig&eacute;s en anglais.</font></font></p>
 	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Auteur&nbsp;:
-	Louis-Aim&eacute; de Fouqui&egrave;res, Miletus SARL 2017-2019
+	Louis-Aim&eacute; de Fouqui&egrave;res, Miletus SARL 2017-2021
 	(www.calendriermilesien.org).</font></font></p>
 	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Test&eacute;
-	sur LibreOffice 6.0.7.3 fran&ccedil;ais sous Windows 10.</font></font></p>
-	<li><p style="margin-top: 0cm; line-height: 100%">Scell&eacute; par
-	un certificat autosign&eacute; valable jusqu&rsquo;au 31/12/2024,
-	attribu&eacute; au concepteur du calendrier mil&eacute;sien (vous
-	pouvez v&eacute;rifier son nom).</p>
+	sur LibreOffice <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="fr-FR">7</span></font></font>.0
+	fran&ccedil;ais sous Windows 10.</font></font></p>
+	<li><p style="margin-top: 0cm; line-height: 100%">Pas de certificat
+	(Libre Office ne permet plus de signer un document).</p>
 </ul>
 <h2 class="western">Versions</h2>
+<p>M2021-01-22</p>
+<ul>
+	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">MILESIAN_DISPLAY
+	affiche par d&eacute;faut&nbsp;: </font></font>
+	</p>
+	<ul>
+		<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">la
+		date seule, si l&rsquo;heure associ&eacute;e et 0 h</font></font></p>
+		<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">la
+		date et l&rsquo;heure, si l&rsquo;heure associ&eacute;e &agrave; la
+		date n&rsquo;est pas 0 h</font></font></p>
+	</ul>
+	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Le
+	2<sup>e</sup> param&egrave;tre, facultatif, associ&eacute; &agrave;
+	MILESIAN_DISPLAY permet de ne jamais imprimer l&rsquo;heure si le
+	param&egrave;tre vaut 0, ou de l&rsquo;imprimer toujours si le
+	param&egrave;tre est diff&eacute;rent de 0.</font></font></p>
+	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">D&eacute;sormais,
+	MILESIAN_YEAR_BASE d&eacute;signe la veille du premier de l&rsquo;an
+	mil&eacute;sien &agrave; 0 h (et non &agrave; 7 h 30). L&rsquo;objectif
+	est de s&eacute;parer totalement la gestion des jours et celle des
+	heures.</font></font></p>
+	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Les
+	fonctions GREGORIAN_EPACT et MILESIAN_EPACT sont ajout&eacute;es.</font></font></p>
+</ul>
+<p>M2020-02-08</p>
+<ul>
+	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Plus
+	d&rsquo;information sur le fichier de description et d&rsquo;aide.</font></font></p>
+	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Correction
+	du fichier de d&eacute;monstration <i>Jours remarquables, </i><span style="font-style: normal">certaines
+	f&ecirc;tes &eacute;tant mal restitu&eacute;es.</span></font></font></p>
+	<li><p align="left" style="margin-top: 0cm; font-style: normal; line-height: 100%">
+	<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Aucune
+	modification des fonctions depuis M2019-06-30</font></font></p>
+</ul>
+<p>M2019-06-30</p>
+<ul>
+	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">R&eacute;sultat
+	de YEAR_BASE est date pr&eacute;c&eacute;dant 1 1m &agrave; 7:30
+	UTC.</font></font></p>
+</ul>
 <p>M2019-01 et ant&eacute;rieures</p>
 <ul>
 	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Calendrier
@@ -76,22 +117,6 @@ Calc et &eacute;quivalents Open Office.
 	d&rsquo;erreur.</font></font></p>
 	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Contr&ocirc;le
 	de plage de valeurs compatible avec la gestion Calc de base.</font></font></p>
-</ul>
-<p>M2019-06-30</p>
-<ul>
-	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">R&eacute;sultat
-	de YEAR_BASE est date pr&eacute;c&eacute;dant 1 1m &agrave; 7:30
-	UTC.</font></font></p>
-</ul>
-<p>M2020-02-08</p>
-<ul>
-	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Plus
-	d&rsquo;information sur le fichier de description et d&rsquo;aide.</font></font></p>
-	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt">Correction
-	du fichier de d&eacute;monstration <i>Jours remarquables, </i><span style="font-style: normal">certaines
-	f&ecirc;tes &eacute;tant mal restitu&eacute;es.</span></font></font></p>
-	<li><p align="left" style="margin-top: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span style="font-style: normal">Aucune
-	modification des fonctions depuis M2019-06-30</span></font></font></p>
 </ul>
 <h2 class="western">Licence</h2>
 <p>Pour la version de base&nbsp;:</p>
@@ -119,7 +144,7 @@ de macros
 <i>extensions</i> souffre de reculs fonctionnels observ&eacute;s
 apparemment depuis la version 6, certains depuis la version 6.0.6.2
 sous Windows 10 (observations du 8m 2018), et confirm&eacute;s sur la
-version 6.0.7.3 (24 12m 2018). Il semble que les seuls modules
+version 7.0 (janvier 2021). Il semble que les seuls modules
 utilisables d&rsquo;une biblioth&egrave;que de macros ou de fonctions
 sont ceux ins&eacute;r&eacute;s dans la biblioth&egrave;que <i>Standard</i><span style="font-style: normal">
 associ&eacute;e &agrave; un document ou &agrave; l&rsquo;instance
@@ -139,23 +164,14 @@ instance Open Office.</p>
 d&eacute;faut fix&eacute;e au niveau <i>&eacute;lev&eacute;</i>.
 Seules les macros et fonctions <i>sign&eacute;es</i><span style="font-style: normal">
 peuvent &ecirc;tre autoris&eacute;es, sous r&eacute;serve d&rsquo;avoir
-accord&eacute; confiance au signataire de ces macros. Vous voudrez
-donc bien accorder la confiance &agrave; </span><span style="font-style: normal">LOUIS
-A</span><span style="font-style: normal"> </span><span style="font-style: normal">BECQ
-DE FOUQUIERES</span><span style="font-style: normal">, qui a sign&eacute;
-</span><span style="font-style: normal">les </span><span style="font-style: normal">macros
-et fonctions au moyen d&rsquo;une signature autonome, sans autorit&eacute;
-de certification. </span><span style="font-style: normal">Il vous est
-toujours possible de v&eacute;rifier le contenu des fonctions et
-macros avant d&rsquo;accorder votre confiance.</span></p>
-<p><span style="font-style: normal">S</span><span style="font-style: normal">i
-vous souhaitez transmettre un document Libre Office contenu ces
-fonctions, vous devrez les signer &agrave; votre tour. Il faut pour
-cela constituer un certificat de signature &eacute;lectronique.
-Certains &eacute;diteurs proposent la confection de signatures
-&eacute;lectroniques non certifi&eacute;es&nbsp;: des
-&laquo;&nbsp;auto-signatures&nbsp;&raquo;. Celles-ci suffisent pour
-activer des fonctions et macros Libre Office.</span></p>
+accord&eacute; confiance au signataire de ces macros. </span><span style="font-style: normal">Mais
+comme par ailleurs il n&rsquo;est plus possible de signer un
+document, la seule solution est d&rsquo;abaisser le niveau de
+s&eacute;curit&eacute; des macros &agrave; </span><i>Moyen </i><span style="font-style: normal">et
+d&rsquo;autoriser les macros.</span><span style="font-style: normal"><br/>
+</span><span style="font-style: normal">Il
+vous est toujours possible de v&eacute;rifier le contenu des
+fonctions et macros avant d&rsquo;accorder votre confiance.</span></p>
 <h2 class="western">Installation des fonctions</h2>
 <h3 class="western">Insertion du mod&egrave;le de feuille de calcul</h3>
 <p>Le fichier <i>Milesian.ots</i> ou <i><span style="text-decoration: none">Milesian
@@ -167,8 +183,8 @@ que mod&egrave;le de feuille de calcul.
 <p>Cr&eacute;ez une nouvelle feuille de calcul sur la base de ce
 mod&egrave;le&nbsp;: cette nouvelle feuille comprend des fonctions
 suppl&eacute;mentaires de calcul calendaire d&eacute;crites infra.
-<i>Vous devrez toutefois signer les macros de cette feuille pour
-pouvoir les utiliser.</i></p>
+Dans les versions ant&eacute;rieures &agrave; 7, <i>Vous dev</i><i>i</i><i>ez
+signer les macros de cette feuille pour pouvoir les utiliser.</i></p>
 <h3 class="western">Insertion en tant que fonctions de r&eacute;f&eacute;rence</h3>
 <p>Ouvrez la feuille <i>Milesian</i> ou<i> Milesian Premium, </i><span style="font-style: normal">ouvrez</span>
 le gestionnaire de macros (<i>Outils / Macros / G&eacute;rer les
@@ -234,6 +250,9 @@ Jour de semaine &laquo;&nbsp;&eacute;tendue&nbsp;&raquo;, avec un
 type 0 par d&eacute;faut, r&eacute;sultat 0 &agrave; 6, dimanche=0&nbsp;;
 Les autres types utilis&eacute;s par Calc pour JOURSEM sont
 disponibles.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Calcul
+de l&rsquo;&eacute;pacte (&acirc;ge de la lune) selon le comput
+gr&eacute;gorien.</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <b>MeanMoon</b>&nbsp;: Date de la plus proche phase de lune moyenne
 avant ou apr&egrave;s une date donn&eacute;e.</p>
@@ -375,6 +394,28 @@ donn&eacute; en param&egrave;tre.</p>
 Param&egrave;tre&nbsp;: Julian_Count, le jour julien, nombre d&eacute;cimal
 correspond &agrave; une date et une heure.</p>
 <p>&nbsp;</p>
+<p>GREGORIAN_EPACT&nbsp;: Nombre entier entre 0 et 29, &eacute;pacte
+gr&eacute;gorienne de l&rsquo;ann&eacute;e. Le calcul, simple
+application des r&egrave;gles du comput gr&eacute;gorien, est
+effectu&eacute; pour n&rsquo;importe quelle valeur de l&rsquo;ann&eacute;e.
+Il n&rsquo;est valable que pour les ann&eacute;es strictement
+sup&eacute;rieures &agrave; 1582.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tre&nbsp;: Year, l&rsquo;ann&eacute;e pour ce calcul. 
+</p>
+<p><br/>
+
+</p>
+<p>MILESIAN_EPACT&nbsp;: Comme GREGORIAN_EPACT, mais le r&eacute;sultat
+correspond &agrave; la veille du nouvel an de l&rsquo;ann&eacute;e
+mil&eacute;sienne. Cette valeur est inf&eacute;rieure de 11 modulo 30
+&agrave; celle de l&rsquo;&eacute;pacte gr&eacute;gorienne.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Param&egrave;tre&nbsp;: Year, l&rsquo;ann&eacute;e pour ce calcul. 
+</p>
+<p><br/>
+
+</p>
 <p>MILESIAN_IS_LONG_YEAR&nbsp;: Bool&eacute;en, indique si l'ann&eacute;e
 mil&eacute;sienne est abondante. Une ann&eacute;e mil&eacute;sienne
 abondante est une ann&eacute;e qui pr&eacute;c&egrave;de une ann&eacute;e
@@ -408,11 +449,11 @@ retourne une erreur.</p>
 <p>&nbsp;</p>
 <p>MILESIAN_YEAR_BASE&nbsp;: Objet Date correspondant &agrave; la
 base d'une ann&eacute;e mil&eacute;sienne c'est &agrave; dire le jour
-pr&eacute;c&eacute;dent le 1 1m de l'ann&eacute;e &agrave; <b>7h 30</b>.</p>
-<p>Permet notamment de chercher les chiffres cl&eacute;s&nbsp;: le
-clavedi ou dies illa, jour de semaine de ce jour, et l'&eacute;pacte
-mil&eacute;sienne, &acirc;ge de la lune &agrave; 7h 30 que l&rsquo;on
-arrondit au demi-entier le plus proche.</p>
+pr&eacute;c&eacute;dent le 1 1m de l'ann&eacute;e &agrave; <b>0 h </b><span style="font-weight: normal">(et
+non plus &agrave; 7 h 30 des versions pr&eacute;c&eacute;dentes)</span>.</p>
+<p>Permet notamment de chercher le clavedi ou dies illa, jour de
+semaine de ce jour, et jour de semaine des jours pivots&nbsp;; permet
+aussi de construire facilement le quanti&egrave;me d&rsquo;ann&eacute;e.</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 Param&egrave;tres&nbsp;: Year&nbsp;: l'ann&eacute;e dont on cherche
 la base.</p>
@@ -447,10 +488,11 @@ Param&egrave;tres&nbsp;:
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 TheDate&nbsp;: objet Date, qui peut &ecirc;tre une date et heure.</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Wtime (optionnel)&nbsp;: 1 par d&eacute;faut. L'heure (partie
-d&eacute;cimale de la date) est &eacute;galement affich&eacute;e.<br/>
-Mettre
-&agrave; 0 pour ne pas afficher l&rsquo;heure.</p>
+Wtime (optionnel)&nbsp;: Si diff&eacute;rent de 0, l'heure (partie
+d&eacute;cimale de la date) est &eacute;galement affich&eacute;e&nbsp;;
+si 0, l&rsquo;heure n&rsquo;est pas affich&eacute;e. Si absent,
+l&rsquo;heure n&rsquo;est affich&eacute;e que pour un argument non
+entier, donc si l&rsquo;heure est diff&eacute;rente de 0 h.</p>
 <p>&nbsp;Dans l&rsquo;expression de date, l&rsquo;ann&eacute;e est
 toujours repr&eacute;sent&eacute;e avec au minimum trois chiffres.</p>
 <p>MILESIAN_MONTH_SHIFT&nbsp;: Date de m&ecirc;me quanti&egrave;me, n
@@ -478,6 +520,9 @@ TheDate&nbsp;: date de d&eacute;part</p>
 MonthShift&nbsp;: nombre de mois de d&eacute;calage vers le futur (+)
 ou le pass&eacute; (-)</p>
 <p>&nbsp;</p>
+<p><br/>
+
+</p>
 <h2 class="western">#MeanMoonPhase</h2>
 <p>&nbsp;</p>
 <p>Calcul de derni&egrave;re ou de prochaine phase de lune. Marge
@@ -593,7 +638,7 @@ le quanti&egrave;me 1 est choisi.</p>
 <p>&nbsp;</p>
 <h1 class="western">Exemples</h1>
 <p>Le fichier &laquo;&nbsp;Jours remarquables&nbsp;&raquo; du
-r&eacute;pertoir t&eacute;l&eacute;charg&eacute; comprend des
+r&eacute;pertoire t&eacute;l&eacute;charg&eacute; comprend des
 exemples de calculs n&rsquo;utilisant pas la fonction DATE_PARSE,
 mais utilisant les autres fonctions.</p>
 <p>&nbsp;</p>
@@ -605,7 +650,7 @@ d'am&eacute;lioration, signalement d'erreurs&nbsp;:</h1>
 
 </p>
 <div title="footer"><p align="center" style="margin-top: 0.5cm; line-height: 100%">
-	<sdfield type=PAGE subtype=RANDOM format=PAGE>10</sdfield></p>
+	<span style="background: #c0c0c0"><sdfield type=PAGE subtype=RANDOM format=PAGE>11</sdfield></span></p>
 </div>
 </body>
 </html>
